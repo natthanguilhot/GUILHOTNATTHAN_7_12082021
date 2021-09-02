@@ -1,6 +1,18 @@
 const { json } = require('express');
 const express = require('express');
 const app = express();
+const { Sequelize } = require('sequelize');
+const userRoutes = require('./routes/user');
+
+const sequelize = new Sequelize(process.env.NAME_DATABSE, 'root', process.env.PASSWORD_DATABSE, {
+    host: process.env.HOST,
+    dialect: 'mysql'
+});
+
+
+sequelize.authenticate()
+.then(() => console.log('Connexion à MySQL réussie !'))
+.catch(() => console.log('Connexion à MySQL échouée !'));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,9 +21,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/createPost',(req,res,next)=>{
-    console.log(req.body);
-    res.status(201).json({message : 'post créé'});
-});
+app.use(json());
+
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
