@@ -1,4 +1,3 @@
-const { json } = require('express');
 const express = require('express');
 const app = express();
 const { Sequelize } = require('sequelize');
@@ -21,7 +20,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(json());
+app.use(express.json());
 
 app.use('/api/auth', userRoutes);
 
