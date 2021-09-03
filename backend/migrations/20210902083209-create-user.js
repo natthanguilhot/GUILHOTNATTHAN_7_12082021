@@ -81,14 +81,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_user: {
+      user_id: {
         type: Sequelize.INTEGER,
         references:{
           model : 'Users',
           key: 'id'
         }
       },
-      id_post: {
+      post_id: {
         type: Sequelize.INTEGER,
         references:{
           model : 'Posts',
@@ -115,7 +115,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_user: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -123,7 +123,7 @@ module.exports = {
           key: 'id'
         }
       },
-      id_post: {
+      post_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -131,7 +131,7 @@ module.exports = {
           key: 'id'
         }
       },
-      id_comment: {
+      comment_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
