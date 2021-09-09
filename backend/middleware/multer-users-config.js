@@ -1,20 +1,13 @@
 const multer = require('multer');
-// const { DATE } = require('sequelize');
 
 const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpeg',
-    'image/png': 'png',
-    'image/gif': 'gif',
 }
 
 const storage = multer.diskStorage({
     destination: (req,file,callback) => {
-        if(req.body.creator) {
-            callback(null, 'images/users')
-        } else {
-            callback(null, 'images/posts')
-        }
+        callback(null, 'images/users')
     },
     filename: (req,file,callback) => {
         const name = file.originalname.split(' ').join('_');
@@ -23,4 +16,4 @@ const storage = multer.diskStorage({
     }
 });
 
-module.exports = multer({ storage }).single('files');
+module.exports = multer({ storage }).single('profile_picture');
