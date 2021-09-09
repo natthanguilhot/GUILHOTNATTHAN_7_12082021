@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
   };
   Posts.init({
     creator: DataTypes.INTEGER,
-    date_publication: DataTypes.DATE,
     files: DataTypes.STRING,
     content: DataTypes.TEXT
   }, {
