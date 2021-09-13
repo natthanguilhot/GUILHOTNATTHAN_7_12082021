@@ -94,5 +94,24 @@ exports.userUpdate = (req,res,next) => {
 };
 
 exports.userDelete = (req,res,next) => {
-
+    Users.findOne({where: {id: req.params.id}})
+    .then(user=>{
+        if(user.profile_picture != null) { // Si l'utilisateur a une PP, supprimer d'abord la PP puis supprimer l'utilisateur
+            const filename = user.profile_picture.split('/images/users/')[1];
+            fs.unlink(`images/users/${filename}`, () => {
+                Users.destroy({where: {id: req.params.id}})
+                .then(()=> {
+                    res.status(200).json({message : 'Utilisateur supprimé !'});
+                })
+                .catch(error => res.status(500).json({ error }))
+            })
+        }else { // Sinon supprimer l'utilisateur directement
+            Users.destroy({where: {id: req.params.id}})
+            .then(()=> {
+                res.status(200).json({message : 'Utilisateur supprimé !'});
+            })
+            .catch(error => res.status(500).json({ error }))
+        }
+    })
+    .catch(error => res.status(500).json({ error }))
 };

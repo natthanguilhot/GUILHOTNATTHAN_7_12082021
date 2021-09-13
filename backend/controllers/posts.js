@@ -4,7 +4,7 @@ const fs = require('fs');
 exports.createPost = (req, res, next) => {
     console.log(req.file)
     Posts.create({
-        creator:req.body.userId,
+        creator: req.body.userId,
         files: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
         content: req.body.content
     })
