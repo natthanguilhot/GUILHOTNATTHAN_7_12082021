@@ -11,10 +11,10 @@ router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 
 //MODIFY USER
-router.put('/user/:id', multer, userCtrl.userUpdate);
+router.put('/user/:id', auth, multer, userCtrl.userUpdate);
 
 // DELETE USER
-router.delete('/user/:id', userCtrl.userDelete);
+router.delete('/user/:id', auth, userCtrl.userDelete);
 
 
 module.exports = router;

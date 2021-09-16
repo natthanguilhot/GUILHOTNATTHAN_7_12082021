@@ -94,6 +94,7 @@ exports.userUpdate = (req,res,next) => {
 };
 
 exports.userDelete = (req,res,next) => {
+    
     Users.findOne({where: {id: req.params.id}})
     .then(user=>{
         if(user.profile_picture != null) { // Si l'utilisateur a une PP, supprimer d'abord la PP puis supprimer l'utilisateur

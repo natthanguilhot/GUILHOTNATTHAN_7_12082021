@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Comments.init({
-    id_user: DataTypes.INTEGER,
-    id_post: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER,
+    post_id: DataTypes.INTEGER,
     content: DataTypes.STRING
   }, {
     sequelize,

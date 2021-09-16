@@ -3,6 +3,8 @@ const app = express();
 const { Sequelize } = require('sequelize');
 const userRoutes = require('./routes/user');
 const postsRoutes = require('./routes/post');
+const commentsRoutes = require('./routes/comment');
+const likesRoutes = require('./routes/like');
 const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -32,5 +34,7 @@ app.use('/images/users', express.static(path.join(__dirname, 'images/users')))
 
 app.use('/api/auth', userRoutes);
 app.use('/api/posts', postsRoutes);
+app.use('/api/comments', commentsRoutes);
+app.use('/api/likes', likesRoutes);
 
 module.exports = app;

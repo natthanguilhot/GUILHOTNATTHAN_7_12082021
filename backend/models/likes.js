@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Likes.init({
-    id_user: DataTypes.INTEGER,
-    id_post: DataTypes.INTEGER,
-    id_comment: DataTypes.INTEGER,
+    user_id: DataTypes.INTEGER,
+    post_id: DataTypes.INTEGER,
+    comment_id: DataTypes.INTEGER,
     is_liked: DataTypes.BOOLEAN
   }, {
     sequelize,
