@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Users } = require("../models");
+const { Users, Posts, Comments, Likes } = require("../models");
 const fs = require('fs');
 
 exports.signup = (req,res,next) => {
@@ -44,8 +44,7 @@ exports.login = (req,res,next) => {
                 userId: user.id,
                 token: jwt.sign(
                     { userId: user.id },
-                    `${process.env.TOKEN}`,
-                    { expiresIn : '24h'}
+                    `${process.env.TOKEN}`
                 )
             });
         })
@@ -94,19 +93,24 @@ exports.userUpdate = (req,res,next) => {
 };
 
 exports.userDelete = (req,res,next) => {
-    
     Users.findOne({where: {id: req.params.id}})
     .then(user=>{
         if(user.profile_picture != null) { // Si l'utilisateur a une PP, supprimer d'abord la PP puis supprimer l'utilisateur
             const filename = user.profile_picture.split('/images/users/')[1];
             fs.unlink(`images/users/${filename}`, () => {
-                Users.destroy({where: {id: req.params.id}})
+                Likes.destroy({where: {user_id: req.body.id}})
+                Comments.destroy({where: {user_id: req.body.id}})
+                Posts.destroy({where: {creator: req.body.id}})
+                Users.destroy({where: {id: req.body.id}})
                 .then(()=> {
                     res.status(200).json({message : 'Utilisateur supprimé !'});
                 })
                 .catch(error => res.status(500).json({ error }))
             })
         }else { // Sinon supprimer l'utilisateur directement
+            Likes.destroy({where: {user_id: req.body.id}})
+            Comments.destroy({where: {user_id: req.body.id}})
+            Posts.destroy({where: {creator: req.body.id}})
             Users.destroy({where: {id: req.params.id}})
             .then(()=> {
                 res.status(200).json({message : 'Utilisateur supprimé !'});
