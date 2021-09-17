@@ -33,7 +33,7 @@ exports.login = (req,res,next) => {
     Users.findOne({ where : {email: req.body.email}})
     .then(user => {
         if (!user) {
-            return res.status(401).json({ error : 'Utilisateur non trouvé !'});
+            return res.status(401).json({ error : 'Aucun compte utilisant cet email a été trouvé !'});
         }
         bcrypt.compare(req.body.password, user.password)
         .then(valid => {
@@ -45,7 +45,8 @@ exports.login = (req,res,next) => {
                 token: jwt.sign(
                     { userId: user.id },
                     `${process.env.TOKEN}`
-                )
+                ),
+                message: "Utilisateur connecté !"
             });
         })
         .catch(error => res.status(500).json({ error : 'Bcrypt' }));
