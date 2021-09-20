@@ -35,11 +35,7 @@ export default {
   components: {},
   methods:{
     displayLoading(){
-      if(this.isLoading == false){
-        this.isLoading = true;
-      }else {
-        this.isLoading = false;
-      }
+      this.isLoading = !isLoading;
     },
     displayForm(){
       this.whichCard = !this.whichCard;
