@@ -9,7 +9,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.NAME_DATABSE, process.env.USER_DATABSE, null, {
+const sequelize = new Sequelize(process.env.NAME_DATABASE, process.env.USER_DATABASE, null, {
     host: process.env.HOST,
     dialect: 'mysql'
 });
@@ -17,7 +17,10 @@ const sequelize = new Sequelize(process.env.NAME_DATABSE, process.env.USER_DATAB
 
 sequelize.authenticate()
 .then(() => console.log('Connexion à MySQL réussie !'))
-.catch(() => console.log('Connexion à MySQL échouée !'));
+.catch((err) => {
+    console.log(err);
+    console.log('Connexion à MySQL échoué !');
+});
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
