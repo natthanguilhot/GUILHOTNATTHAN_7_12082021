@@ -17,7 +17,10 @@ const sequelize = new Sequelize(process.env.NAME_DATABASE, process.env.USER_DATA
 
 sequelize.authenticate()
 .then(() => console.log('Connexion à MySQL réussie !'))
-.catch(() => console.log('Connexion à MySQL échouée !'));
+.catch((err) => {
+    console.log(err);
+    console.log('Connexion à MySQL échoué !');
+});
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
