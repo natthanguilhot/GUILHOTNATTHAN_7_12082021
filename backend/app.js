@@ -9,7 +9,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.NAME_DATABSE, process.env.USER_DATABSE, null, {
+const sequelize = new Sequelize(process.env.NAME_DATABASE, process.env.USER_DATABASE, null, {
     host: process.env.HOST,
     dialect: 'mysql'
 });
@@ -24,9 +24,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
-});
-
-app.use(express.json());
+}); 
 
 app.use('/images/posts', express.static(path.join(__dirname, 'images/posts')));
 app.use('/images/users', express.static(path.join(__dirname, 'images/users')))
