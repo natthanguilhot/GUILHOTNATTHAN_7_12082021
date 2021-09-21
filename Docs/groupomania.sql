@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 03 sep. 2021 à 14:32
+-- Généré le : mar. 21 sep. 2021 à 14:18
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -38,7 +38,17 @@ CREATE TABLE IF NOT EXISTS `comments` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`user_id`),
   KEY `id_post` (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `comments`
+--
+
+INSERT INTO `comments` (`id`, `user_id`, `post_id`, `content`, `createdAt`, `updatedAt`) VALUES
+(2, 19, 13, 'Mon premier commentaire ! :)', '2021-09-16 08:11:54', '2021-09-16 08:11:54'),
+(4, 19, 13, 'Mon premier commentaire ! :)', '2021-09-16 08:31:59', '2021-09-16 08:31:59'),
+(5, 19, 13, 'Mon premier commentaire ! :)', '2021-09-16 08:33:37', '2021-09-16 08:33:37'),
+(6, 19, 14, 'Mon premier commentaire ! :)', '2021-09-16 08:38:10', '2021-09-16 08:38:10');
 
 -- --------------------------------------------------------
 
@@ -50,8 +60,8 @@ DROP TABLE IF EXISTS `likes`;
 CREATE TABLE IF NOT EXISTS `likes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `post_id` int NOT NULL,
-  `comment_id` int NOT NULL,
+  `post_id` int DEFAULT NULL,
+  `comment_id` int DEFAULT NULL,
   `is_liked` tinyint(1) NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
@@ -59,7 +69,16 @@ CREATE TABLE IF NOT EXISTS `likes` (
   KEY `id_user` (`user_id`),
   KEY `id_post` (`post_id`),
   KEY `id_comment` (`comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `likes`
+--
+
+INSERT INTO `likes` (`id`, `user_id`, `post_id`, `comment_id`, `is_liked`, `createdAt`, `updatedAt`) VALUES
+(15, 19, 14, NULL, 1, '2021-09-16 09:13:14', '2021-09-16 09:13:14'),
+(16, 19, 14, NULL, 1, '2021-09-16 09:16:16', '2021-09-16 09:16:16'),
+(17, 19, NULL, 5, 1, '2021-09-16 09:19:14', '2021-09-16 09:19:14');
 
 -- --------------------------------------------------------
 
@@ -77,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `creator` (`creator`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `posts`
@@ -86,7 +105,12 @@ CREATE TABLE IF NOT EXISTS `posts` (
 INSERT INTO `posts` (`id`, `creator`, `files`, `content`, `createdAt`, `updatedAt`) VALUES
 (1, 19, NULL, 'ceci est mon premier post !', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 19, NULL, 'ceci est du texte', '2021-09-03 14:10:10', '2021-09-03 14:10:10'),
-(3, 19, NULL, NULL, '2021-09-03 14:10:26', '2021-09-03 14:10:26');
+(3, 19, NULL, NULL, '2021-09-03 14:10:26', '2021-09-03 14:10:26'),
+(4, 19, NULL, 'ceci est mon 3ieme post avec du texte', '2021-09-09 08:12:07', '2021-09-09 08:12:07'),
+(11, 19, 'http://localhost:3000/images/posts/PPPNatthan.jpeg1631182767247.jpeg', 'ceci est du texte avec une image', '2021-09-09 10:19:27', '2021-09-09 10:19:27'),
+(12, 19, 'http://localhost:3000/images/posts/giphy.gif1631183153120.gif', 'ceci est du texte avec une image', '2021-09-09 10:25:53', '2021-09-09 10:25:53'),
+(13, 20, 'http://localhost:3000/images/posts/giphy.gif1631196613674.gif', 'ceci est du texte avec une image', '2021-09-09 14:10:13', '2021-09-09 14:10:13'),
+(14, 19, 'http://localhost:3000/images/posts/giphy.gif1631205433446.gif', 'ceci est du texte avec une image', '2021-09-09 16:37:13', '2021-09-09 16:37:13');
 
 -- --------------------------------------------------------
 
@@ -130,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
@@ -139,8 +163,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `name`, `lastname`, `job`, `account_type`, `profile_picture`, `createdAt`, `updatedAt`) VALUES
 (12, '789', '$2b$08$8HRgYIKEae84vboD7CcJ7.uHm315gxmrUT7w.YRG/xwqEb.YC.Be.', 'natt', 'gui', 'jobtest', 0, NULL, '2021-09-02 14:13:19', '2021-09-02 14:13:19'),
 (13, 'natt', '$2b$08$.5lqfChMP1PLD3ZQXGy3OuhTE3/LLmxp78rKL5p6tkUQw26.KiqB6', 'natt', 'gui', 'jobtest', 0, NULL, '2021-09-02 14:16:23', '2021-09-02 14:16:23'),
-(14, 'natt1', '$2b$08$U2VkaPVl0ZWAoXqeATQFXOJN0R7QEEj56o9xlLD3BQqa0PdkZS7KK', 'natt', 'gui', 'jobtest', 0, NULL, '2021-09-02 14:16:34', '2021-09-02 14:16:34'),
-(19, 'azerty12345', '$2b$08$jxI40T4PlSBrkIqTWT82Pe.VVuhs1MbGRwLOaVP6/eDZkVfDrnWtW', 'natt', 'gui', 'jobtest', 0, NULL, '2021-09-03 10:19:43', '2021-09-03 10:19:43');
+(19, 'azerty12345', '$2b$08$jxI40T4PlSBrkIqTWT82Pe.VVuhs1MbGRwLOaVP6/eDZkVfDrnWtW', 'natthan', 'guilhot', 'test', 0, 'http://localhost:3000/images/users/PPPAlain.jpeg1631197137588.jpeg', '2021-09-03 10:19:43', '2021-09-09 14:18:57'),
+(20, 'testimage', '$2b$08$05e1XUgZJ6WvNXi5IQBh4OY5MqN1M8PphdJ7wBpT.BBVbsNtxAyM6', 'testimage', 'testimage', NULL, 0, 'http://localhost:3000/images/users/PPPNatthan.jpeg1631196591944.jpeg', '2021-09-09 13:41:21', '2021-09-09 14:09:51'),
+(32, 'natthan.guilhot@laposte.net', '$2b$08$v7vVvgzYySTMBmkD9/hR2.yHAgBuGJ4IsU7JCJonlMoEeARJMjyOK', 'Natthan', 'Guilhot', 'dev', 0, NULL, '2021-09-17 10:14:37', '2021-09-17 10:14:37');
 
 --
 -- Contraintes pour les tables déchargées
