@@ -4,24 +4,28 @@ const { Users, Posts, Comments, Likes } = require("../models");
 const fs = require('fs');
 
 exports.signup = (req,res,next) => {
-    console.log(req.body)
-    Users.findOne({ where: {email: req.body.email}})
+    Users.findOne({ where: { email: req.body.email }})
     .then(newUser => {
-        if (newUser == null) {
-            console.log('Email non trouvé => Création d\' un nouvel utilisateur !')
-            bcrypt.genSalt(8, function(err, salt) {
-                bcrypt.hash(req.body.password, salt, function(err, hash) {
-                    const user = Users.create({
-                        email: req.body.email,
-                        password: hash,
-                        account_type:0,
-                        lastname:req.body.lastname, 
-                        name:req.body.name,
-                        job:req.body.job,
+        if (newUser == null) { // Si l'email n'est pas trouvé
+            const REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if (!REGEX_EMAIL.test(req.body.email)){
+                res.status(403).json({ message : 'Email non conforme !'});
+            } else {
+                console.log('Email non trouvé => Création d\' un nouvel utilisateur !')
+                bcrypt.genSalt(8, function(err, salt) {
+                    bcrypt.hash(req.body.password, salt, function(err, hash) {
+                        const user = Users.create({
+                            email: req.body.email,
+                            password: hash,
+                            account_type:0,
+                            lastname:req.body.lastname, 
+                            name:req.body.name,
+                            job:req.body.job,
+                        });
+                        res.status(200).json({message : 'Utilisateur créé !'});
                     });
-                    res.status(200).json({message : 'Utilisateur créé !'});
-                });
-            });    
+                });        
+            }
         } else {
             console.log('Email trouvé => Abandon de création d\'un nouvel utilisateur !')
             res.status(403).json({ message : 'Un compte est déjà associé à cet adresse mail !'})

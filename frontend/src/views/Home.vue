@@ -35,7 +35,7 @@ export default {
   components: {},
   methods:{
     displayLoading(){
-      this.isLoading = !isLoading;
+      this.isLoading = !this.isLoading;
     },
     displayForm(){
       this.whichCard = !this.whichCard;
