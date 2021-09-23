@@ -2,9 +2,9 @@
 <template>
   <div class="home">
     <h1 class="text-5xl font-bold text-red-500 my-8 text-center">Groupomania</h1>
-    <SignUpForm @displayLoading="displayLoading" @displayForm="displayForm" :class="{goBack: whichCard == false, goFront: whichCard == true}"/>
-    <LoadingSpinner v-if="isLoading"/>
-    <LogInForm @displayLoading="displayLoading" @displayForm="displayForm" :class="{goBack: whichCard == true, goFront: whichCard == false}"/>
+    <SignUpForm @displayLoading="$store.commit('displayLoading')" @displayForm="displayForm" :class="{goBack: whichCard == false, goFront: whichCard == true}"/>
+    <LoadingSpinner v-if="$store.state.isLoading"/>
+    <LogInForm @displayLoading="$store.commit('displayLoading')" @displayForm="displayForm" :class="{goBack: whichCard == true, goFront: whichCard == false}"/>
   </div>
 </template>
 
@@ -28,15 +28,10 @@ export default {
   },
   data(){
     return {
-      isLoading:false,
       whichCard:null,
     }
   },
-  components: {},
   methods:{
-    displayLoading(){
-      this.isLoading = !this.isLoading;
-    },
     displayForm(){
       this.whichCard = !this.whichCard;
     }
