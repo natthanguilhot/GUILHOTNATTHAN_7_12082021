@@ -1,8 +1,14 @@
 import { createStore } from "vuex";
 
 export default createStore({
-  state: {},
-  mutations: {},
+  state: {
+    isLoading: false,
+  },
+  mutations: {
+    displayLoading(state){
+      state.isLoading = !state.isLoading;
+    }
+  },
   actions: {},
   modules: {},
 });

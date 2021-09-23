@@ -6,10 +6,14 @@ const fs = require('fs');
 exports.signup = (req,res,next) => {
     Users.findOne({ where: { email: req.body.email }})
     .then(newUser => {
-        if (newUser == null) { // Si l'email n'est pas trouvé
+        if (newUser == null) { // Si l'email n'est pas présente dans la BDD
             const REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (!REGEX_EMAIL.test(req.body.email)){
-                res.status(403).json({ message : 'Email non conforme !'});
+                res.status(403).json({ error : 'Email non conforme !'});
+            }else if(req.body.lastname.length < 3 ){
+                res.status(403).json({ error : 'Le nom de famille doit contenir au moins 3 caractères !'});
+            } else if (req.body.name.length < 3){
+                res.status(403).json({ error : 'Le prénom doit contenir au moins 3 caractères !'});
             } else {
                 console.log('Email non trouvé => Création d\' un nouvel utilisateur !')
                 bcrypt.genSalt(8, function(err, salt) {
@@ -26,9 +30,9 @@ exports.signup = (req,res,next) => {
                     });
                 });        
             }
-        } else {
+        } else { // Si l'email est déjà présente dans la BDD
             console.log('Email trouvé => Abandon de création d\'un nouvel utilisateur !')
-            res.status(403).json({ message : 'Un compte est déjà associé à cet adresse mail !'})
+            res.status(403).json({ error : 'Un compte est déjà associé à cet adresse mail !'})
         }    
     });
 };
