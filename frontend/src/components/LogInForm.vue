@@ -35,7 +35,6 @@ export default {
   methods:{
     LogIn(){
         this.$emit('displayLoading');
-        this.isLoading = true;
         fetch('http://localhost:3000/api/auth/login',
         {
             method: 'POST',
@@ -47,12 +46,10 @@ export default {
         })
         .then(response => response.json())
         .then(response => {
-            console.log(response)
             this.response = response.message || response.error;
             if(response.token){
                 localStorage.setItem('authgroupomania', JSON.stringify({userId : response.userId, token :response.token}));
-                console.log(window.location.href)
-                window.location.href = window.location.href+"main"; // on envoie sur la page confirmation    
+                window.location.href = window.location.href+"main/feed"; // on envoie sur la page confirmation    
             }
             this.$emit('displayLoading');
         })

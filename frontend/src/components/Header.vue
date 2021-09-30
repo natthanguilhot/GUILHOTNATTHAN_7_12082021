@@ -1,7 +1,4 @@
 <template>
-  <header class="h-20 bg-red-600">
-      <router-link to="/main"><img src="../assets/icon-left-font-monochrome-black.png" alt="Groupomania" class=" bg-gray-600"></router-link>
-  </header>
 </template>
 
 <script>
@@ -10,6 +7,10 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style lang="scss" scoped>
+header nav ul li i {
+  font-size: 3rem;
+  line-height: 4rem;
+  color: rgb(200, 60, 60);
+}
+</style> 
