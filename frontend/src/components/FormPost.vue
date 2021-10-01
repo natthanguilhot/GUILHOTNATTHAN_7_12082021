@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="flex justify-between items-center w-full p-1">
-            <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12"><i class="fas fa-link mr-4"></i>Image</label>
+            <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12 max-w-[120px]"><i class="fas fa-link mr-4"></i>Image</label>
             <input id="file" name="file" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden"/>
             <button @click.prevent="sendPost" type="submit" class="bg-primary rounded-2xl text-center m-1 text-white h-10 w-4/12">Envoyez !</button>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col justify-center items-center">
         <FormPost @MajPost="APIRequest"/>
-        <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
+        <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6">
                 <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div>
                 <!-- <img src="" alt="Photo de profil de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl"> -->
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <p>{{ post.content }}</p>
-            <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto">
+            <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
         </div>
     </div>
 </template>
@@ -39,11 +39,14 @@ export default {
             })
             .then(response => response.json())
             .then(posts => {
-                this.listPosts = Object.values(posts);
-                // for (const posts of this.listPosts) {
-                //     console.log(JSON.stringify(posts.postId));
-                //     // TODO : CHANGER LE FORMAT DE LA DATE !!
-                // }
+                this.listPosts = Object.values(posts).reverse();
+                for (const post of this.listPosts) { // On split les formatt actuel pour les regrouper au format voulu
+                    let splitDateTime = post.createdAt.split('T');
+                    let splitDate = splitDateTime[0].split('-');
+                    let splitTime = splitDateTime[1].split(':');
+                    let trueHour = parseInt(splitTime[0])+2; // On rajoute 2 heures pour faire correspondre à l'heure actuelle
+                    post.createdAt = 'Créé le ' + splitDate[2] + '/' + splitDate[1] + '/' + splitDate[0] + ' à ' + trueHour + ':' + splitTime[1];
+                }
             });
         },
     },

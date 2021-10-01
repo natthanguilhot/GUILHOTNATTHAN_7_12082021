@@ -25,6 +25,9 @@ exports.getAllPosts = (req, res, next) => {
     Posts.findAll({ 
         attributes : [['id','postId'],['creator','userId'],'files','content','createdAt','updatedAt'],
     })
-    .then(posts => res.status(200).json(posts))
+    .then(posts => {
+        // Users.findOne({ where : {posts.userId : id}})
+        res.status(200).json(posts)
+    })
     .catch(err => res.status(500).json({ err }))
 };

@@ -19,13 +19,24 @@
                 Paramètres
             </router-link>
         </li>
+        <li class="h-10 hover:bg-primary hover:text-white transition-colors duration-200 group w-full">
+            <router-link @click="logOut" class="!w-full h-full" to="/">
+                <i class="fas fa-sign-out-alt mx-2 w-7 text-primary group-hover:text-white"></i>
+                Deconnexion
+            </router-link>
+        </li>
       </ul>
     </nav>
 </template>
 
 <script>
 export default {
-
+    name:'NavDesktop',
+    methods:{
+        logOut(){
+            localStorage.clear('authgroupomania');
+        },
+    },
 }
 </script>
 

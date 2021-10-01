@@ -1,8 +1,8 @@
 <template>
   <div class="main bg-gray-100">
     <Header/>
-    <div class="flex justify-center items-start m-auto w-9/12 relative">
-      <NavDesktop />
+    <div class="flex justify-center items-start m-auto lg:w-9/12 relative">
+      <NavDesktop @displayLoading="$store.commit('displayLoading')"/>
       <router-view />
     </div>
   </div>
@@ -17,7 +17,7 @@ export default {
   name: "Main",
     components:{
     Header,
-    NavDesktop
+    NavDesktop,
   },
   data(){
     return{
