@@ -1,26 +1,23 @@
 <template>
   <div class="main bg-gray-100">
-  <header class="border-b shadow-sm">
-    <nav>
-      <ul class="flex justify-around items-center h-20">
-        <li><router-link to="/main/feed"><i class="fas fa-home"></i></router-link></li>
-        <li><router-link to="/main/profil"><i class="fas fa-user"></i></router-link></li>
-        <li><router-link to="/main/settings"><i class="fas fa-user-cog"></i></router-link></li>
-      </ul>
-    </nav>
-  </header>
-  <router-view />
+    <Header/>
+    <div class="flex justify-center items-start m-auto w-9/12 relative">
+      <NavDesktop />
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
 import store from "@/store/index";
+import NavDesktop from "@/components/NavDesktop.vue";
 
 export default {
   name: "Main",
     components:{
     Header,
+    NavDesktop
   },
   data(){
     return{
@@ -31,6 +28,7 @@ export default {
   },
   beforeCreate() {
     this.$options.components.Header = require('../components/Header.vue').default;
+    this.$options.components.NavDesktop = require('../components/NavDesktop.vue').default;
   },
   created(){
     store.commit('checkValidation');
@@ -39,9 +37,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-header nav ul li i {
-  font-size: 3rem;
-  line-height: 4rem;
-  color: rgb(200, 60, 60);
-}
 </style> 
