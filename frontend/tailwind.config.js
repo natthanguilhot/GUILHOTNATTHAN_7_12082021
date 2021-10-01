@@ -4,9 +4,6 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {},
-    colors: {
-      default: '#FD2D01',
-    },
   },
   variants: {
     extend: {},
