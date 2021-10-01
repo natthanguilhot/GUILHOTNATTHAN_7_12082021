@@ -1,9 +1,9 @@
 <template>
   <header class="border-b shadow-sm">
     <div class="flex justify-center items-center h-10 max-w-3xl m-auto pt-8 mb-8">
-      <div class="bg-gray-900 h-10 w-10 rounded-2xl flex justify-center items-center m-1"><i class="fas fa-user-alt text-red-600"></i></div>
+      <div class="bg-gray-900 h-10 w-10 rounded-2xl flex justify-center items-center m-1"><i class="fas fa-user-alt text-primary"></i></div>
       <input type="text" class="h-10 m-1 w-9/12 pl-2 rounded-2xl" />
-      <button class="text-2xl flex justify-center items-center text-red-600 cursor-pointer"><i class="fas fa-search"></i></button>
+      <button class="text-2xl flex justify-center items-center text-primary cursor-pointer"><i class="fas fa-search"></i></button>
     </div>
     <nav class="lg:hidden">
       <ul class="flex justify-around items-center h-20">

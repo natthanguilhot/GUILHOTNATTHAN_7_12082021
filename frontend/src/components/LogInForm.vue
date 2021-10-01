@@ -6,15 +6,15 @@
                 <p class="text-lg text-center m-4">Retrouvez tout vos collègues en vous connectant !</p>
                 <div class="flex flex-col justify-center items-center m-2 w-full">
                     <label for="email">Email</label>
-                    <input v-model="user.email" id="emailLogIn" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-red-300" required type="email" minlength="6"/>
+                    <input v-model="user.email" id="emailLogIn" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="email" minlength="6"/>
                 </div>
                 <div class="flex flex-col justify-center items-center m-2 w-full">
                     <label for="password">Mot de passe</label>
-                    <input v-model="user.password" id="passwordLogIn" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-red-300" required type="password" minlength="8" maxlength="20"/>
+                    <input v-model="user.password" id="passwordLogIn" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="password" minlength="8" maxlength="20"/>
                 </div>
-                <button @click="LogIn" type="button" class="text-center py-2 px-5 bg-red-200 rounded m-2  focus:ring-4 focus:ring-red-400 ring-offset-2">Se connecter</button>
+                <button @click="LogIn" type="button" class="text-center py-2 px-5 bg-secondary rounded m-2  focus:ring-4 focus:ring-primary ring-offset-2">Se connecter</button>
                 <p>{{ response }}</p>
-                <p class="my-4">Vous n'avez pas de compte ? <span @click="displayForm" class="text-red-400 hover:underline hover:text-black cursor-pointer">S'inscrire</span></p>
+                <p class="my-4">Vous n'avez pas de compte ? <span @click="displayForm" class="text-primary hover:underline hover:text-black cursor-pointer">S'inscrire</span></p>
             </form>
         </div>
     </div>

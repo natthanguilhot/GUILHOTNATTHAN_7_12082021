@@ -57,6 +57,6 @@ export default {
 div div i {
   font-size: 3rem;
   line-height: 4rem;
-  color: rgb(211, 57, 57);
+  color: #FD2D01;
 }
 </style>
