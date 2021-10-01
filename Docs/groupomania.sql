@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 21 sep. 2021 à 14:18
+-- Généré le : ven. 01 oct. 2021 à 15:12
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -96,21 +96,27 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `creator` (`creator`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `posts`
 --
 
 INSERT INTO `posts` (`id`, `creator`, `files`, `content`, `createdAt`, `updatedAt`) VALUES
-(1, 19, NULL, 'ceci est mon premier post !', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 19, NULL, 'ceci est du texte', '2021-09-03 14:10:10', '2021-09-03 14:10:10'),
-(3, 19, NULL, NULL, '2021-09-03 14:10:26', '2021-09-03 14:10:26'),
 (4, 19, NULL, 'ceci est mon 3ieme post avec du texte', '2021-09-09 08:12:07', '2021-09-09 08:12:07'),
-(11, 19, 'http://localhost:3000/images/posts/PPPNatthan.jpeg1631182767247.jpeg', 'ceci est du texte avec une image', '2021-09-09 10:19:27', '2021-09-09 10:19:27'),
-(12, 19, 'http://localhost:3000/images/posts/giphy.gif1631183153120.gif', 'ceci est du texte avec une image', '2021-09-09 10:25:53', '2021-09-09 10:25:53'),
 (13, 20, 'http://localhost:3000/images/posts/giphy.gif1631196613674.gif', 'ceci est du texte avec une image', '2021-09-09 14:10:13', '2021-09-09 14:10:13'),
-(14, 19, 'http://localhost:3000/images/posts/giphy.gif1631205433446.gif', 'ceci est du texte avec une image', '2021-09-09 16:37:13', '2021-09-09 16:37:13');
+(14, 19, 'http://localhost:3000/images/posts/giphy.gif1631205433446.gif', 'ceci est du texte avec une image', '2021-09-09 16:37:13', '2021-09-09 16:37:13'),
+(15, 65, 'http://localhost:3000/images/posts/logo.png1633079692514.png', 'test', '2021-10-01 09:14:52', '2021-10-01 09:14:52'),
+(16, 65, NULL, 'Mon second post avec l\'ui', '2021-10-01 09:16:46', '2021-10-01 09:16:46'),
+(17, 65, 'http://localhost:3000/images/posts/icon.png1633080278977.png', 'Un autre test ! ?', '2021-10-01 09:24:38', '2021-10-01 09:24:38'),
+(33, 65, NULL, 'superbe vidéo ! \nhttps://www.youtube.com/watch?v=6JR8HI9Ymd8', '2021-10-01 09:57:26', '2021-10-01 09:57:26'),
+(34, 65, NULL, 'Ceci est un autre\nTest\nAh', '2021-10-01 12:34:22', '2021-10-01 12:34:22'),
+(36, 65, NULL, '', '2021-10-01 13:17:41', '2021-10-01 13:17:41'),
+(37, 65, 'http://localhost:3000/images/posts/icon-above-font.png1633095905149.png', 'null', '2021-10-01 13:45:05', '2021-10-01 13:45:05'),
+(42, 65, NULL, 'test heure', '2021-10-01 14:35:09', '2021-10-01 14:35:09'),
+(43, 65, NULL, 'test', '2021-10-01 14:35:47', '2021-10-01 14:35:47'),
+(44, 65, 'http://localhost:3000/images/posts/flame.png1633099689867.png', 'waw', '2021-10-01 14:48:09', '2021-10-01 14:48:09');
 
 -- --------------------------------------------------------
 
@@ -154,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
@@ -165,7 +171,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `name`, `lastname`, `job`, `acco
 (13, 'natt', '$2b$08$.5lqfChMP1PLD3ZQXGy3OuhTE3/LLmxp78rKL5p6tkUQw26.KiqB6', 'natt', 'gui', 'jobtest', 0, NULL, '2021-09-02 14:16:23', '2021-09-02 14:16:23'),
 (19, 'azerty12345', '$2b$08$jxI40T4PlSBrkIqTWT82Pe.VVuhs1MbGRwLOaVP6/eDZkVfDrnWtW', 'natthan', 'guilhot', 'test', 0, 'http://localhost:3000/images/users/PPPAlain.jpeg1631197137588.jpeg', '2021-09-03 10:19:43', '2021-09-09 14:18:57'),
 (20, 'testimage', '$2b$08$05e1XUgZJ6WvNXi5IQBh4OY5MqN1M8PphdJ7wBpT.BBVbsNtxAyM6', 'testimage', 'testimage', NULL, 0, 'http://localhost:3000/images/users/PPPNatthan.jpeg1631196591944.jpeg', '2021-09-09 13:41:21', '2021-09-09 14:09:51'),
-(32, 'natthan.guilhot@laposte.net', '$2b$08$v7vVvgzYySTMBmkD9/hR2.yHAgBuGJ4IsU7JCJonlMoEeARJMjyOK', 'Natthan', 'Guilhot', 'dev', 0, NULL, '2021-09-17 10:14:37', '2021-09-17 10:14:37');
+(65, 'natthan.guilhot@laposte.net', '$2b$08$B10btbDv.6hsH774VJvjX.L.hAOBq6MECle7WXT9cAcDlr9bIki8q', 'Natthan', 'Guilhot', 'Dev', 0, NULL, '2021-09-23 14:03:26', '2021-09-23 14:03:26');
 
 --
 -- Contraintes pour les tables déchargées
