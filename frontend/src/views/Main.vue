@@ -1,12 +1,15 @@
 <template>
   <div class="main bg-gray-100">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Header/>
     <div class="flex justify-center items-start m-auto lg:w-9/12 relative">
       <NavDesktop />
       <router-view />
     </div>
 =======
+=======
+>>>>>>> parent of c8e79af (Responsive)
   <header class="border-b shadow-sm">
     <nav>
       <ul class="flex justify-around items-center h-20">
@@ -17,6 +20,9 @@
     </nav>
   </header>
   <router-view />
+<<<<<<< HEAD
+>>>>>>> parent of c8e79af (Responsive)
+=======
 >>>>>>> parent of c8e79af (Responsive)
   </div>
 </template>

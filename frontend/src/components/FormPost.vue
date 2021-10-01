@@ -23,9 +23,12 @@ export default {
         return {
             post:{
 <<<<<<< HEAD
+<<<<<<< HEAD
                 userId:JSON.parse(localStorage.getItem('authgroupomania')).userId,
                 content:"",
 =======
+=======
+>>>>>>> parent of c8e79af (Responsive)
                 userId:null,
                 content:null,
 >>>>>>> parent of c8e79af (Responsive)
