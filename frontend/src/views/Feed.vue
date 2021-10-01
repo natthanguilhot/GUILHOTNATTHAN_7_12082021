@@ -1,11 +1,10 @@
 <template>
     <div class="flex flex-col justify-center items-center">
-        <FormPost @MajPost="APIRequest"/>
-        <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
+        <FormPost />
+        <div v-for="post in listPosts" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6">
                 <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div>
                 <!-- <img src="" alt="Photo de profil de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl"> -->
-                <!-- TODO : AJOUTER LA PP DE L'UTILISATEUR -->
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ post.userId }}</h2>
                     <p>{{ post.createdAt }}</p>
@@ -39,11 +38,12 @@ export default {
             })
             .then(response => response.json())
             .then(posts => {
+                console.log(posts);
                 this.listPosts = Object.values(posts);
-                // for (const posts of this.listPosts) {
-                //     console.log(JSON.stringify(posts.postId));
-                //     // TODO : CHANGER LE FORMAT DE LA DATE !!
-                // }
+                console.log(this.listPosts);
+                for (const posts of this.listPosts) {
+                    console.log(JSON.stringify(posts.postId));
+                }
             });
         },
     },
