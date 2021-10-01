@@ -24,7 +24,7 @@ export default {
         return {
             post:{
                 userId:JSON.parse(localStorage.getItem('authgroupomania')).userId,
-                content:null,
+                content:"",
                 files:null
             },
             response:null,

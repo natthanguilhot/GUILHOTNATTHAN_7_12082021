@@ -1,7 +1,7 @@
 <template>
   <div class="main bg-gray-100">
     <Header/>
-    <div class="flex justify-center items-start m-auto w-9/12 relative">
+    <div class="flex justify-center items-start m-auto lg:w-9/12 relative">
       <NavDesktop />
       <router-view />
     </div>
