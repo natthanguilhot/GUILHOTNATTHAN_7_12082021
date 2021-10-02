@@ -9,7 +9,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.NAME_DATABASE, process.env.USER_DATABASE, null, {
+const sequelize = new Sequelize(process.env.NAME_DATABASE, process.env.USER_DATABASE, process.env.PASSWORD_DATABASE, {
     host: process.env.HOST,
     dialect: 'mysql'
 });
