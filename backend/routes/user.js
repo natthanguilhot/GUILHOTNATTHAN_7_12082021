@@ -10,6 +10,9 @@ router.post('/signup', userCtrl.signup);
 // LOGIN USER
 router.post('/login', userCtrl.login);
 
+// GET ONE USER
+router.post('/user/:id', auth, userCtrl.getOneUser);
+
 //MODIFY USER
 router.put('/user/:id', auth, multer, userCtrl.userUpdate);
 

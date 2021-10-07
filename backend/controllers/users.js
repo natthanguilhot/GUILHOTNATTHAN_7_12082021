@@ -25,6 +25,7 @@ exports.signup = (req,res,next) => {
                             lastname:req.body.lastname, 
                             name:req.body.name,
                             job:req.body.job,
+                            profile_picture: 'http://localhost:3000/images/users/default_PP.jpg'
                         });
                         res.status(200).json({message : 'Utilisateur créé !'});
                     });
@@ -62,12 +63,25 @@ exports.login = (req,res,next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
-exports.userUpdate = (req,res,next) => {
-    Users.findOne({where: {id: req.params.id}})
+exports.getOneUser = (req,res,next) => { // TODO : Renvoyer que les info nécéssaire (nom prénom pp job)
+    Users.findOne({ where : {id: req.body.userId}})
     .then(user => {
-        if(req.file) { // Si un fichier est présent
-            if(user.profile_picture != null){ // et si l'utilisateur a déjà une PP alors on remplace l'ancienne par le nouveau fichier
-                const filename = user.profile_picture.split('/images/users/')[1];
+        res.status(200).json(user);
+    })
+    .catch(error => res.status(500).json({ error }));
+};
+
+
+exports.userUpdate = (req,res,next) => {
+    Users.findOne({where: {id: req.body.userId}})
+    .then(user => {
+        if(req.body.lastname.length < 3 ){
+            res.status(403).json({ error : 'Le nom de famille doit contenir au moins 3 caractères !'});
+        } else if (req.body.name.length < 3){
+            res.status(403).json({ error : 'Le prénom doit contenir au moins 3 caractères !'});
+        } else if (req.file) { // Si un fichier est présent
+            const filename = user.profile_picture.split('/images/users/')[1];
+            if(filename !== 'default_PP.jpg'){ // et si l'utilisateur a déjà une PP alors on remplace l'ancienne par le nouveau fichier
                 fs.unlink(`images/users/${filename}`, () => {
                     Users.update({ 
                         ...req.body, 
@@ -102,25 +116,26 @@ exports.userUpdate = (req,res,next) => {
 };
 
 exports.userDelete = (req,res,next) => {
-    Users.findOne({where: {id: req.params.id}})
+    console.log(req.body);
+    Users.findOne({where: {id: req.body.userId}})
     .then(user=>{
-        if(user.profile_picture != null) { // Si l'utilisateur a une PP, supprimer d'abord la PP puis supprimer l'utilisateur
-            const filename = user.profile_picture.split('/images/users/')[1];
+        const filename = user.profile_picture.split('/images/users/')[1];
+        if(filename !== 'default_PP.jpg') { // Si l'utilisateur a une PP autre que celle par défaut, supprimer d'abord la PP puis supprimer l'utilisateur
             fs.unlink(`images/users/${filename}`, () => {
-                Likes.destroy({where: {user_id: req.body.id}})
-                Comments.destroy({where: {user_id: req.body.id}})
-                Posts.destroy({where: {creator: req.body.id}})
-                Users.destroy({where: {id: req.body.id}})
+                Likes.destroy({where: {user_id: req.body.userId}})
+                Comments.destroy({where: {user_id: req.body.userId}})
+                Posts.destroy({where: {creator: req.body.userId}})
+                Users.destroy({where: {id: req.body.userId}})
                 .then(()=> {
                     res.status(200).json({message : 'Utilisateur supprimé !'});
                 })
                 .catch(error => res.status(500).json({ error }))
             })
         }else { // Sinon supprimer l'utilisateur directement
-            Likes.destroy({where: {user_id: req.body.id}})
-            Comments.destroy({where: {user_id: req.body.id}})
-            Posts.destroy({where: {creator: req.body.id}})
-            Users.destroy({where: {id: req.params.id}})
+            Likes.destroy({where: {user_id: req.body.userId}})
+            Comments.destroy({where: {user_id: req.body.userId}})
+            Posts.destroy({where: {creator: req.body.userId}})
+            Users.destroy({where: {id: req.body.userId}})
             .then(()=> {
                 res.status(200).json({message : 'Utilisateur supprimé !'});
             })

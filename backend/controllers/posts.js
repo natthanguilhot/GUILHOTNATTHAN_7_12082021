@@ -2,6 +2,7 @@ const { Posts } = require("../models");
 const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
+    console.log(req.body.content);
     if(req.file){
         Posts.create({
             creator: req.body.userId,
@@ -22,11 +23,10 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-    Posts.findAll({ 
+    Posts.findAll({
         attributes : [['id','postId'],['creator','userId'],'files','content','createdAt','updatedAt'],
     })
     .then(posts => {
-        // Users.findOne({ where : {posts.userId : id}})
         res.status(200).json(posts)
     })
     .catch(err => res.status(500).json({ err }))

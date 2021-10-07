@@ -34,8 +34,16 @@ export default {
   methods:{
     displayForm(){
       this.whichCard = !this.whichCard;
+    },
+    checkLS(){
+      if(localStorage.getItem('authgroupomania')){
+        window.location.href = window.location.href + 'main/feed';
+      }
     }
   },
+  beforeMount(){
+    this.checkLS();
+  }
 };
 </script>
 

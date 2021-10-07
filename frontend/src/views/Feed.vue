@@ -1,15 +1,18 @@
 <template>
-    <div class="flex flex-col justify-center items-center">
+    <div class="flex flex-col justify-center items-center w-full max-w-3xl">
         <FormPost @MajPost="APIRequest"/>
         <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6">
-                <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div>
-                <!-- <img src="" alt="Photo de profil de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl"> -->
+                <!-- <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div> -->
+                <img src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
                 <!-- TODO : AJOUTER LA PP DE L'UTILISATEUR -->
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ post.userId }}</h2>
                     <p>{{ post.createdAt }}</p>
                 </div>
+                <!-- <button v-if="post.userId === JSON.parse(localStorage.getItem('authgroupomania')).userId" type="button" class=" text-xs">
+                    <i class="fas fa-trash text-xs"></i>
+                </button> -->
             </div>
             <p>{{ post.content }}</p>
             <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
@@ -39,6 +42,7 @@ export default {
             })
             .then(response => response.json())
             .then(posts => {
+                console.log(posts);
                 this.listPosts = Object.values(posts).reverse();
                 for (const post of this.listPosts) { // On split les formatt actuel pour les regrouper au format voulu
                     let splitDateTime = post.createdAt.split('T');

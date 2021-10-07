@@ -1,40 +1,40 @@
 <template>
-    <div class="flex flex-col justify-center items-center relative">
-        <div class="max-w-screen-md m-auto absolute inset-0">
-            <form id="signup" class="w-10/12 border rounded-2xl m-auto flex flex-col justify-center items-center my-8 shadow-lg min-h-[665px] bg-white">
-                <img src="../assets/icon-left-font-monochrome-black.png" alt="Groupomania" class="p-4 m-4"/>
-                <p class="text-lg text-center m-4">Retrouvez tout vos collègues en vous inscrivant !</p>
-                <div class="flex flex-col justify-center items-center m-2 w-full">
-                    <label for="email">Email</label>
-                    <input v-model="user.email" id="email" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="email" placeholder="exemple@exemple.fr" minlength="6"/>
-                    <p v-if="regexEmail" class="text-primary m-1">{{ regexEmail }}</p>
-                </div>
-                <div class="flex flex-col justify-center items-center m-2 w-full">
-                    <label for="password">Mot de passe</label>
-                    <input v-model="user.password" id="password" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="password" placeholder="Min. 8 caractères" minlength="8" maxlength="20"/>
-                    <p v-if="password" class="text-primary m-1">{{ password }}</p>
-                </div>
-                <div class="flex flex-col justify-center items-center m-2 w-full">
-                    <label for="lastname">Nom</label>
-                    <input v-model="user.lastname" id="lastname" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="text" placeholder="Min. 3 caractères" minlength="3" maxlength="15"/>
-                    <p v-if="lastname" class="text-primary m-1">{{ lastname }}</p>
-                </div>
-                <div class="flex flex-col justify-center items-center m-2 w-full">
-                    <label for="name">Prénom</label>
-                    <input v-model="user.name" id="name" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="text" placeholder="Min. 3 caractères" minlength="3" maxlength="15"/>
-                    <p v-if="name" class="text-primary m-1">{{ name }}</p>
-                </div>
-                <div class="flex flex-col justify-center items-center m-2 w-full">
-                    <label for="job">Job (optionnel)</label>
-                    <input v-model="user.job" id="job" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" type="text" placeholder="Developpeur" minlength="3" maxlength="15"/>
-                </div>
-                <button @click.prevent="signUp" type="submit" class="text-center py-2 px-5 bg-secondary rounded m-2  focus:ring-4 focus:ring-prmary ring-offset-2">Créer un compte</button>
-                <p v-if="error" class="text-primary error_message">{{ error }}</p>
-                <p v-if="response" class="text-green-600">{{ response }}</p>
-                <p class="my-4">Vous avez déjà un compte ? <span @click="displayForm" class="text-primary hover:underline hover:text-black cursor-pointer">Se connecter</span></p>
-            </form>
+  <div class="flex flex-col justify-center items-center relative">
+    <div class="max-w-screen-md m-auto absolute inset-0">
+      <form id="signup" class="w-10/12 border rounded-2xl m-auto flex flex-col justify-center items-center my-8 shadow-lg min-h-[665px] bg-white">
+        <img src="../assets/icon-left-font-monochrome-black.png" alt="Groupomania" class="p-4 m-4"/>
+        <p class="text-lg text-center m-4">Retrouvez tout vos collègues en vous inscrivant !</p>
+        <div class="flex flex-col justify-center items-center m-2 w-full">
+          <label for="email">Email</label>
+          <input v-model="user.email" id="email" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="email" placeholder="exemple@exemple.fr" minlength="6"/>
+          <p v-if="regexEmail" class="text-primary m-1">{{ regexEmail }}</p>
         </div>
+        <div class="flex flex-col justify-center items-center m-2 w-full">
+          <label for="password">Mot de passe</label>
+          <input v-model="user.password" id="password" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="password" placeholder="Min. 8 caractères" minlength="8" maxlength="20"/>
+          <p v-if="password" class="text-primary m-1">{{ password }}</p>
+        </div>
+        <div class="flex flex-col justify-center items-center m-2 w-full">
+          <label for="lastname">Nom</label>
+          <input v-model="user.lastname" id="lastname" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="text" placeholder="Min. 3 caractères" minlength="3" maxlength="15"/>
+          <p v-if="lastname" class="text-primary m-1">{{ lastname }}</p>
+        </div>
+        <div class="flex flex-col justify-center items-center m-2 w-full">
+          <label for="name">Prénom</label>
+          <input v-model="user.name" id="name" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="text" placeholder="Min. 3 caractères" minlength="3" maxlength="15"/>
+          <p v-if="name" class="text-primary m-1">{{ name }}</p>
+        </div>
+        <div class="flex flex-col justify-center items-center m-2 w-full">
+          <label for="job">Job (optionnel)</label>
+          <input v-model="user.job" id="job" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" type="text" placeholder="Developpeur" minlength="3" maxlength="15"/>
+        </div>
+        <button @click.prevent="signUp" type="submit" class="text-center py-2 px-5 bg-secondary rounded m-2  focus:ring-4 focus:ring-prmary ring-offset-2">Créer un compte</button>
+        <p v-if="error" class="text-primary error_message">{{ error }}</p>
+        <p v-if="response" class="text-green-600">{{ response }}</p>
+        <p class="my-4">Vous avez déjà un compte ? <span @click="displayForm" class="text-primary hover:underline hover:text-black cursor-pointer">Se connecter</span></p>
+      </form>
     </div>
+  </div>
 </template>
 
 <script>
@@ -103,8 +103,7 @@ export default {
           this.error = response.error;
           this.$emit('displayLoading');
           setTimeout(() => {
-          this.response = ''; this.error = ''; this.user.email = ""; this.user.password = ""; this.user.lastname = ""; this.user.name = ""; this.user.job = "";
-          this.displayForm();
+          this.response = ""; this.error = ""; this.user.email = ""; this.user.password = ""; this.user.lastname = ""; this.user.name = ""; this.user.job = "";
           }, 2000);
         })
         .catch(error => error.json())
