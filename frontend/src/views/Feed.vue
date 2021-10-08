@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col justify-center items-center w-full max-w-3xl">
         <FormPost @MajPost="APIRequest"/>
-        <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
-            <div :data-userid="post.userId" class="flex justify-around items-start mb-6">
+        <router-link to="/main" v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
+            <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
                 <!-- <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div> -->
                 <img src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
                 <!-- TODO : AJOUTER LA PP DE L'UTILISATEUR -->
@@ -10,13 +10,31 @@
                     <h2>{{ post.userId }}</h2>
                     <p>{{ post.createdAt }}</p>
                 </div>
-                <!-- <button v-if="post.userId === JSON.parse(localStorage.getItem('authgroupomania')).userId" type="button" class=" text-xs">
-                    <i class="fas fa-trash text-xs"></i>
-                </button> -->
+                <button v-if="post.userId == this.userId" @click="deletePost(post.postId)" type="button" class=" border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
             <p>{{ post.content }}</p>
             <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
-        </div>
+            <div class="flex jusitfy-start items-center mt-4">
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-up"></i></button>
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-down"></i></button>
+            </div>
+            <!-- <div> TODO : A METTRE DANS LA PAGE DU POST
+                <div class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl">
+                    <img alt="Photo de l'utilisateur" src="../../../backend/images/users/default_PP.jpg" class="w-10 h-10 rounded-2xl mr-1"/>
+                    <p>un premier commentaire Velit irure incididunt veniam consectetur consectetur. Ex culpa labore eu eu reprehenderit sint. Ex id cillum nostrud amet qui cupidatat eiusmod. Sit sint occaecat eiusmod id ut amet nulla. Mollit cillum ullamco quis nisi qui pariatur reprehenderit ea aute aute do est voluptate qui.</p>
+                    <div class="flex flex-col jusitfy-start items-center">
+                        <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-up"></i></button>
+                        <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-down"></i></button>
+                    </div>
+                </div>
+            </div> 
+            <div class="w-full flex flex-col justify-center items-start">
+                <div class="w-full">
+                    <textarea type="text" class="border border-primary rounded w-full p-1" minlength="2" placeholder="Insérez un commentaire ici."/>
+                </div>
+                <button @click="" class="border rounded-2xl text-primary px-4 py-2 my-2 hover:text-white hover:bg-primary">Ajouter votre commentaire</button>
+            </div>-->
+        </router-link>
     </div>
 </template>
 
@@ -30,6 +48,7 @@ export default {
     data(){
         return {
             listPosts: [],
+            userId : undefined,
         }
     },
     methods: {
@@ -53,17 +72,19 @@ export default {
                 }
             });
         },
+        getUserId(){
+            this.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
+        },
+        deletePost(postId) {
+            fetch
+        }
     },
     beforeMount() {
         this.APIRequest();
+        this.getUserId();
     }
 }
 </script>
 
 <style lang="scss" scoped>
-div div i {
-  font-size: 3rem;
-  line-height: 4rem;
-  color: #FD2D01;
-}
 </style>

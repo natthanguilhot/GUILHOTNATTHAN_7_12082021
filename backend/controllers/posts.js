@@ -1,5 +1,6 @@
 const { Posts } = require("../models");
 const fs = require('fs');
+const db = require('../models/index');
 
 exports.createPost = (req, res, next) => {
     console.log(req.body.content);
@@ -18,13 +19,13 @@ exports.createPost = (req, res, next) => {
         })
         .then(() => res.status(201).json({ message : 'Post créé !'}))
         .catch(err => res.status(500).json({ err }))    
-
     }
 };
 
 exports.getAllPosts = (req, res, next) => {
     Posts.findAll({
         attributes : [['id','postId'],['creator','userId'],'files','content','createdAt','updatedAt'],
+        // include : [ db.users ]
     })
     .then(posts => {
         res.status(200).json(posts)

@@ -7,7 +7,7 @@
           <i class="fas fa-camera absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black"></i>
           <!-- <img v-if="{}"/> TODO : afficher l'image déposé-->
         </label>
-        <input id="profile_picture" name="profile_picture" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden"/>
+        <input id="profile_picture" name="profile_picture" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden" @change="updateUserInformations"/>
       </div>
       <div class="flex flex-col justify-center items-center m-2 w-full">
         <label for="lastname">Nom</label>

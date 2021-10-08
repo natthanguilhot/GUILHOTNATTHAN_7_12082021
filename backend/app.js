@@ -14,7 +14,6 @@ const sequelize = new Sequelize(process.env.NAME_DATABASE, process.env.USER_DATA
     dialect: 'mysql'
 });
 
-
 sequelize.authenticate()
 .then(() => console.log('Connexion à MySQL réussie !'))
 .catch((err) => {
