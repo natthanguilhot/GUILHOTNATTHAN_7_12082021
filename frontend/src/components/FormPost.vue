@@ -2,15 +2,17 @@
     <form id="formAddPost" class="flex flex-col justify-between items-center bg-white h-auto w-11/12 m-6 p-3 rounded-2xl max-w-3xl border">
         <div class="flex justify-between sm:justify-start items-start w-full p-1">
             <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center">
-                <i class="fas fa-user-alt "></i>
+                <img v-if="user.pp" :src="user.pp" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
+                <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
             </div>
             <div class="h-full w-9/12 sm:w-full p-1">
-                <textarea v-model="post.content" name="content" id="content" type="text" placeholder="Quoi de neuf ?" minlength="1" class="w-full h-full rounded p-1 focus:border-red-600 focus:border" />
+                <textarea v-model="post.content" name="content" id="content" type="text" :placeholder="'Quoi de neuf ' + user.name + ' ?'" minlength="1" class="w-full h-full rounded p-1 focus:border-red-600 focus:border" />
             </div>
         </div>
+        <img id="myimage" src="" class="rounded-2xl">
         <div class="flex justify-between items-center w-full p-1">
             <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12 max-w-[120px] hover:opacity-75"><i class="fas fa-link mr-4"></i>Image</label>
-            <input id="file" name="file" type="file" accept="image/png, image/jpeg, image/jpg" class="w-0 h-0"/>
+            <input @change="onFileSelected" id="file" name="file" type="file" accept="image/png, image/jpeg, image/jpg" class="w-0 h-0"/>
             <button @click.prevent="sendPost" type="submit" class="bg-primary rounded-2xl text-center m-1 text-white h-10 w-4/12">Envoyez !</button>
         </div>
         <p v-if="response" class="text-green-600">{{ response }}</p>
@@ -28,6 +30,14 @@ export default {
                 files:null
             },
             response:null,
+            user:{
+                name: "",
+                lastname:'',
+                pp: "",
+            },
+            bodyUserId:{
+                userId:JSON.parse(localStorage.getItem('authgroupomania')).userId,
+            },
         }
     },
     methods:{
@@ -50,11 +60,46 @@ export default {
                 this.post.content = null,
                 this.response = response.message;
                 setTimeout(() => {
-                    this.response = null
+                    this.response = null;
+                    this.files = null
                 }, 5000);
             })
-        }
+        },
+        onFileSelected(event) {
+            var selectedFile = event.target.files[0];
+            var reader = new FileReader();
+            var imgtag = document.getElementById("myimage");
+            // let tst = document.querySelector('#file');
+            imgtag.title = selectedFile.name;
+            reader.onload = function(event) {
+                imgtag.src = event.target.result;
+                // imgtag.src = ""; TODO : faire ce traitement plus tard
+            };
+            reader.readAsDataURL(selectedFile);
+            
+        },
+        getUserInformations(){
+            fetch('http://localhost:3000/api/auth/user/' + `${this.bodyUserId.userId}`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json',
+                    "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
+                },
+                body : JSON.stringify(this.bodyUserId),
+            })
+            .then(response => response.json())
+            .then(user => {
+                this.user.name = user.name;
+                this.user.lastname = user.lastname;
+                this.user.pp = user.profile_picture;
+            })
+            .catch(err => err.json())
+        },
     },
+    beforeMount(){
+        this.getUserInformations();
+    }
 }
 </script>
 

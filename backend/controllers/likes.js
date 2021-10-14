@@ -8,7 +8,7 @@ exports.createLike = (req, res, next) => { // 0 dislike || 1 like
         comment_id: req.body.commentId,
         is_liked: req.body.isLiked,
     })
-    .then(() => res.status(201).json({ message : 'Like ajouté !'}))
+    .then(() => res.status(201).json({ message : 'Like ou dislike ajouté !'}))
     .catch(err => res.status(500).json({ err }))
 };
 

@@ -1,13 +1,13 @@
 <template>
     <div class="flex flex-col justify-center items-center w-full max-w-3xl">
         <FormPost @MajPost="APIRequest"/>
-        <router-link to="/main" v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
+        <router-link to="/main/feed" v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
                 <!-- <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div> -->
-                <img src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
-                <!-- TODO : AJOUTER LA PP DE L'UTILISATEUR -->
+                <img v-if="post.User.profile_picture" :src="post.User.profile_picture" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
+                <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
                 <div class="flex flex-col justify-around items-start m-2">
-                    <h2>{{ post.userId }}</h2>
+                    <h2>{{ post.User.name }} {{post.User.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
                 </div>
                 <button v-if="post.userId == this.userId" @click="deletePost(post.postId)" type="button" class=" border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
@@ -15,8 +15,11 @@
             <p>{{ post.content }}</p>
             <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
             <div class="flex jusitfy-start items-center mt-4">
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-up"></i></button>
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-down"></i></button>
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="sendRequestLikePost(post.postId)"><i class="fas fa-thumbs-up"></i></button>
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i></button>
+            </div>
+            <div>
+                nbr like
             </div>
             <!-- <div> TODO : A METTRE DANS LA PAGE DU POST
                 <div class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl">
@@ -75,8 +78,70 @@ export default {
         getUserId(){
             this.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
         },
+        sendRequestLikePost(postId){
+            let bodyLike = {
+                userId : this.userId,
+                postId : postId,
+                commentId : null,
+                isLiked : 1,
+            };
+            console.log(JSON.stringify(bodyLike));
+            fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json',
+                    "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
+                },
+                body: JSON.stringify(bodyLike),
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+            });
+        },
+        sendRequestDislikePost(postId){
+            let bodyLike = {
+                userId : this.userId,
+                postId : postId,
+                commentId : null,
+                isLiked : 0,
+            };
+            console.log(JSON.stringify(bodyLike));
+            fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json',
+                    "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
+                },
+                body: JSON.stringify(bodyLike),
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+            });
+        },
         deletePost(postId) {
-            fetch
+            let bodyDeletePost = {
+                userId : this.userId,
+                postId : postId,
+            };
+            console.log("suppression post " + postId);
+            fetch('http://localhost:3000/api/posts/' + `${JSON.stringify(postId)}`,{
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json',
+                    "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
+                },
+                body: JSON.stringify(bodyDeletePost),
+            })
+            .then(response => response.json())
+            .then(response => {
+                this.APIRequest();
+                console.log(response);
+            });
         }
     },
     beforeMount() {

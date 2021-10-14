@@ -41,11 +41,11 @@ db.posts = require('./post.js')(sequelize, Sequelize);
 db.likes = require('./likes.js')(sequelize, Sequelize);
 
 //Relations
-db.likes.belongsTo(db.posts);
-db.posts.hasMany(db.likes);
-db.comments.belongsTo(db.posts);
-db.posts.hasMany(db.comments);
-db.posts.belongsTo(db.users);
-db.users.hasMany(db.posts);
+db.likes.associate(db);
+db.posts.associate(db);
+db.comments.associate(db);
+db.posts.associate(db);
+db.posts.associate(db);
+db.users.associate(db);
 
 module.exports = db;

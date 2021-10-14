@@ -63,8 +63,10 @@ exports.login = (req,res,next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
-exports.getOneUser = (req,res,next) => { // TODO : Renvoyer que les info nécéssaire (nom prénom pp job)
-    Users.findOne({ where : {id: req.body.userId}})
+exports.getOneUser = (req,res,next) => { 
+    Users.findOne({ where : {id: req.body.userId},
+        attributes : ['id','name','lastname','job','profile_picture'],
+    })
     .then(user => {
         res.status(200).json(user);
     })
