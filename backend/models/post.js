@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       });
       Posts.hasMany(models.Likes, {
         foreignKey: 'post_id'
-      })
+      });
+      Posts.hasMany(models.Comments, {
+        foreignKey: 'post_id'
+      });
     }
   };
   Posts.init({

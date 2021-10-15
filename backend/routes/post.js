@@ -12,6 +12,10 @@ router.post('/', auth, multer, postCtrl.createPost);
 // Get all posts
 router.get('/', auth, postCtrl.getAllPosts);
 
+// Get one post
+router.post('/:id', auth, postCtrl.getOnePosts);
+
+// Delete post
 router.delete('/:id', auth, postCtrl.deleteOnePost);
 
 module.exports = router;

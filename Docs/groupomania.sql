@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 07 oct. 2021 à 15:33
+-- Généré le : ven. 15 oct. 2021 à 14:29
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -38,17 +38,14 @@ CREATE TABLE IF NOT EXISTS `comments` (
   PRIMARY KEY (`id`),
   KEY `id_user` (`user_id`),
   KEY `id_post` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `comments`
 --
 
 INSERT INTO `comments` (`id`, `user_id`, `post_id`, `content`, `createdAt`, `updatedAt`) VALUES
-(2, 19, 13, 'Mon premier commentaire ! :)', '2021-09-16 08:11:54', '2021-09-16 08:11:54'),
-(4, 19, 13, 'Mon premier commentaire ! :)', '2021-09-16 08:31:59', '2021-09-16 08:31:59'),
-(5, 19, 13, 'Mon premier commentaire ! :)', '2021-09-16 08:33:37', '2021-09-16 08:33:37'),
-(6, 19, 14, 'Mon premier commentaire ! :)', '2021-09-16 08:38:10', '2021-09-16 08:38:10');
+(22, 83, 78, 'Très belle photo !', '2021-10-15 14:29:16', '2021-10-15 14:29:16');
 
 -- --------------------------------------------------------
 
@@ -69,16 +66,7 @@ CREATE TABLE IF NOT EXISTS `likes` (
   KEY `id_user` (`user_id`),
   KEY `id_post` (`post_id`),
   KEY `id_comment` (`comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `likes`
---
-
-INSERT INTO `likes` (`id`, `user_id`, `post_id`, `comment_id`, `is_liked`, `createdAt`, `updatedAt`) VALUES
-(15, 19, 14, NULL, 1, '2021-09-16 09:13:14', '2021-09-16 09:13:14'),
-(16, 19, 14, NULL, 1, '2021-09-16 09:16:16', '2021-09-16 09:16:16'),
-(17, 19, NULL, 5, 1, '2021-09-16 09:19:14', '2021-09-16 09:19:14');
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -96,21 +84,14 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `creator` (`creator`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `posts`
 --
 
 INSERT INTO `posts` (`id`, `creator`, `files`, `content`, `createdAt`, `updatedAt`) VALUES
-(2, 19, NULL, 'ceci est du texte', '2021-09-03 14:10:10', '2021-09-03 14:10:10'),
-(4, 19, NULL, 'ceci est mon 3ieme post avec du texte', '2021-09-09 08:12:07', '2021-09-09 08:12:07'),
-(13, 20, 'http://localhost:3000/images/posts/giphy.gif1631196613674.gif', 'ceci est du texte avec une image', '2021-09-09 14:10:13', '2021-09-09 14:10:13'),
-(14, 19, 'http://localhost:3000/images/posts/giphy.gif1631205433446.gif', 'ceci est du texte avec une image', '2021-09-09 16:37:13', '2021-09-09 16:37:13'),
-(46, 76, 'http://localhost:3000/images/posts/143100371_169798837898803_304379245568086221_n.png1633614232558.png', 'ceci est un test incroyble !', '2021-10-07 13:43:52', '2021-10-07 13:43:52'),
-(47, 76, 'http://localhost:3000/images/posts/Screenshot_1.png1633616116236.png', 'null', '2021-10-07 14:15:16', '2021-10-07 14:15:16'),
-(49, 76, 'http://localhost:3000/images/posts/Screenshot_2.png1633617784695.png', 'null', '2021-10-07 14:43:04', '2021-10-07 14:43:04'),
-(50, 76, 'http://localhost:3000/images/posts/Screenshot_2.png1633617824656.png', 'null', '2021-10-07 14:43:44', '2021-10-07 14:43:44');
+(78, 82, 'http://localhost:3000/images/posts/Screenshot_3.png1634308109317.png', 'Salut ! Voici une photo de mes vacances !', '2021-10-15 14:28:29', '2021-10-15 14:28:29');
 
 -- --------------------------------------------------------
 
@@ -154,19 +135,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `name`, `lastname`, `job`, `account_type`, `profile_picture`, `createdAt`, `updatedAt`) VALUES
-(13, 'natt', '$2b$08$.5lqfChMP1PLD3ZQXGy3OuhTE3/LLmxp78rKL5p6tkUQw26.KiqB6', 'natt', 'gui', 'jobtest', 0, NULL, '2021-09-02 14:16:23', '2021-09-02 14:16:23'),
-(19, 'azerty12345', '$2b$08$jxI40T4PlSBrkIqTWT82Pe.VVuhs1MbGRwLOaVP6/eDZkVfDrnWtW', 'natthan', 'guilhot', 'test', 0, 'http://localhost:3000/images/users/PPPAlain.jpeg1631197137588.jpeg', '2021-09-03 10:19:43', '2021-09-09 14:18:57'),
-(20, 'testimage', '$2b$08$05e1XUgZJ6WvNXi5IQBh4OY5MqN1M8PphdJ7wBpT.BBVbsNtxAyM6', 'testimage', 'testimage', NULL, 0, 'http://localhost:3000/images/users/PPPNatthan.jpeg1631196591944.jpeg', '2021-09-09 13:41:21', '2021-09-09 14:09:51'),
-(76, 'natthan.guilhot@laposte.net', '$2b$08$jc5pKiBUnjSSX7Y8xQvub.z2XaKxcZJzmGoAxAET.hT4zp835Hqrm', 'Guilhot', 'Natthan', 'Developpeur Web', 0, 'http://localhost:3000/images/users/Screenshot_1.png1633619683057.png', '2021-10-07 13:43:06', '2021-10-07 15:14:43'),
-(78, 'natthan.guilhot@laposte.com', '$2b$08$hPozxLSYnKQYGPl9siD.deg7TKsP8EOeuwYNBxbF.2BlvYKTKXwv2', 'test', 'test', '', 0, 'http://localhost:3000/images/users/default_PP.jpg', '2021-10-07 14:34:10', '2021-10-07 14:34:10'),
-(79, 'natthan.guilhot@laposte.fr', '$2b$08$R.bOd7Eebub/4TUtbQ5pKubMec1ugYxAgiVf9TwW1w2.aiDBsa5S6', 'test', 'test', '', 0, 'http://localhost:3000/images/users/Screenshot_2.png1633618273625.undefined', '2021-10-07 14:50:29', '2021-10-07 14:51:13');
+(82, 'natthan.guilhot@laposte.net', '$2b$08$emlIu2FNa3iipjB9M.nJBuEHSDrcF8fiDAg54Mrc0WDjsKzYF1Nxy', 'Natthan', 'Guilhot', '', 0, 'http://localhost:3000/images/users/photodeprofilpro.jpg1634308092426.jpeg', '2021-10-15 14:27:48', '2021-10-15 14:28:12'),
+(83, 'natthan.guilhot@laposte.fr', '$2b$08$JN0vnyvHW9PFmR8NJ45W/uAD4HYrV.HUcVp.GQJwxVdKGCFyLWiJu', 'Jean', 'Dupont', '', 0, 'http://localhost:3000/images/users/default_PP.jpg', '2021-10-15 14:29:03', '2021-10-15 14:29:03');
 
 --
 -- Contraintes pour les tables déchargées

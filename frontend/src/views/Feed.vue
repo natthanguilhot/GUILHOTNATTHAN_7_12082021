@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col justify-center items-center w-full max-w-3xl">
         <FormPost @MajPost="APIRequest"/>
-        <router-link to="/main/feed" v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
+        <router-link :to="{name: 'FeedId', params : {id: post.postId} }" v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
                 <!-- <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div> -->
                 <img v-if="post.User.profile_picture" :src="post.User.profile_picture" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
@@ -15,28 +15,12 @@
             <p>{{ post.content }}</p>
             <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
             <div class="flex jusitfy-start items-center mt-4">
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="sendRequestLikePost(post.postId)"><i class="fas fa-thumbs-up"></i></button>
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i></button>
-            </div>
-            <div>
-                nbr like
-            </div>
-            <!-- <div> TODO : A METTRE DANS LA PAGE DU POST
-                <div class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl">
-                    <img alt="Photo de l'utilisateur" src="../../../backend/images/users/default_PP.jpg" class="w-10 h-10 rounded-2xl mr-1"/>
-                    <p>un premier commentaire Velit irure incididunt veniam consectetur consectetur. Ex culpa labore eu eu reprehenderit sint. Ex id cillum nostrud amet qui cupidatat eiusmod. Sit sint occaecat eiusmod id ut amet nulla. Mollit cillum ullamco quis nisi qui pariatur reprehenderit ea aute aute do est voluptate qui.</p>
-                    <div class="flex flex-col jusitfy-start items-center">
-                        <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-up"></i></button>
-                        <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click=""><i class="fas fa-thumbs-down"></i></button>
-                    </div>
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-thumbs-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
+                <div class="ml-4">
+                    {{ post.Comments.length }} commentaire(s)
                 </div>
-            </div> 
-            <div class="w-full flex flex-col justify-center items-start">
-                <div class="w-full">
-                    <textarea type="text" class="border border-primary rounded w-full p-1" minlength="2" placeholder="Insérez un commentaire ici."/>
-                </div>
-                <button @click="" class="border rounded-2xl text-primary px-4 py-2 my-2 hover:text-white hover:bg-primary">Ajouter votre commentaire</button>
-            </div>-->
+            </div>
         </router-link>
     </div>
 </template>
@@ -64,8 +48,9 @@ export default {
             })
             .then(response => response.json())
             .then(posts => {
-                console.log(posts);
+                // console.log(posts);
                 this.listPosts = Object.values(posts).reverse();
+                console.log(this.listPosts);
                 for (const post of this.listPosts) { // On split les formatt actuel pour les regrouper au format voulu
                     let splitDateTime = post.createdAt.split('T');
                     let splitDate = splitDateTime[0].split('-');
@@ -85,7 +70,6 @@ export default {
                 commentId : null,
                 isLiked : 1,
             };
-            console.log(JSON.stringify(bodyLike));
             fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
                 method: 'POST',
                 headers: {
@@ -101,13 +85,12 @@ export default {
             });
         },
         sendRequestDislikePost(postId){
-            let bodyLike = {
+            let bodyDislike = {
                 userId : this.userId,
                 postId : postId,
                 commentId : null,
                 isLiked : 0,
             };
-            console.log(JSON.stringify(bodyLike));
             fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
                 method: 'POST',
                 headers: {
@@ -115,7 +98,7 @@ export default {
                     'Content-Type': 'application/json',
                     "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
                 },
-                body: JSON.stringify(bodyLike),
+                body: JSON.stringify(bodyDislike),
             })
             .then(response => response.json())
             .then(response => {
@@ -127,7 +110,6 @@ export default {
                 userId : this.userId,
                 postId : postId,
             };
-            console.log("suppression post " + postId);
             fetch('http://localhost:3000/api/posts/' + `${JSON.stringify(postId)}`,{
                 method: 'DELETE',
                 headers: {

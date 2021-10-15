@@ -30,6 +30,9 @@ exports.getAllPosts = (req, res, next) => {
         },
         {
             model : models.likes,
+        },
+        {
+            model : models.comments,
         }
     ],
     })
@@ -38,6 +41,33 @@ exports.getAllPosts = (req, res, next) => {
     })
     .catch(err => res.status(500).json({ err }))
 };
+
+exports.getOnePosts = (req, res, next) => {
+    console.log(req.body);
+    models.Posts.findOne({
+        where : {id: req.body.postId},
+        attributes : [['id','postId'],['creator','userId'],'files','content','createdAt','updatedAt'],
+        include : [
+            { 
+            model : models.users,
+            attributes : ['name','lastname' , 'profile_picture', 'account_type'],
+            },
+            {
+                model : models.likes,
+            },
+            {
+                model : models.comments,
+                attributes : ['id', 'user_id' , 'post_id', 'content'],
+                include : [{ model: models.users, attributes: ['lastname', 'profile_picture', 'name'] }]
+            },
+        ],
+    })
+    .then(posts => {
+        res.status(200).json(posts)
+    })
+    .catch(err => res.status(500).json({ err }))
+};
+
 
 exports.deleteOnePost = (req, res, next) => { // TODO : Supprimer fichier du post s'il y en a un
     models.Likes.destroy({where: {post_id: req.body.postId}})

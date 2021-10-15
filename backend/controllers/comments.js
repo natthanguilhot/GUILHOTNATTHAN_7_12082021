@@ -10,6 +10,14 @@ exports.createComment = (req, res, next) => {
     .catch(err => res.status(500).json({ err }))
 };
 
+exports.deleteComment = (req, res, next) => {
+    Comments.destroy({ where: {id : req.body.commentId},
+    })
+    .then(() => res.status(201).json({ message : 'Commentaire supprimé !'}))
+    .catch(err => res.status(500).json({ err }))
+};
+
+
 exports.getAllCommentsFromOnePost = (req, res, next) => {
     Comments.findAll({
         where: {post_id: req.body.postId},

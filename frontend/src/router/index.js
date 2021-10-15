@@ -20,19 +20,25 @@ const routes = [
         path: "feed",
         name: "Feed",
         component: () =>
-          import(/* webpackChunkName: "main" */ "../views/Feed.vue"),
-      },  
+          import(/* webpackChunkName: "Feed" */ "../views/Feed.vue"),
+      },
+      {
+        path: ":id",
+        name: "FeedId",
+        component: () =>
+          import(/* webpackChunkName: "FeedId" */ "../views/PostDetails.vue"),
+      },
       {
         path: "settings",
         name: "Settings",
         component: () =>
-          import(/* webpackChunkName: "main" */ "../views/Settings.vue"),
+          import(/* webpackChunkName: "Settings" */ "../views/Settings.vue"),
       }, 
       {
         path: "profil",
         name: "Profil",
         component: () =>
-          import(/* webpackChunkName: "main" */ "../views/Profil.vue"),
+          import(/* webpackChunkName: "Profil" */ "../views/Profil.vue"),
       },    
     ],  
   },

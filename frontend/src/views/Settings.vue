@@ -1,5 +1,5 @@
 <template>
-  <div class="border rounded-2xl h-auto bg-white w-11/12 my-6 lg:my-6 lg:mx-8 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
+  <div class="border rounded-2xl h-auto bg-white w-11/12 my-6  lg:mx-8 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl">
     <form id="signup" class="w-10/12 rounded-2xl m-auto flex flex-col justify-center items-center bg-white">
       <div class="flex flex-col justify-center items-center m-2 w-full">
         <label for="profile_picture" class=" cursor-pointer rounded-full hover:opacity-80 relative">
