@@ -48,9 +48,7 @@ export default {
             })
             .then(response => response.json())
             .then(posts => {
-                // console.log(posts);
                 this.listPosts = Object.values(posts).reverse();
-                console.log(this.listPosts);
                 for (const post of this.listPosts) { // On split les formatt actuel pour les regrouper au format voulu
                     let splitDateTime = post.createdAt.split('T');
                     let splitDate = splitDateTime[0].split('-');

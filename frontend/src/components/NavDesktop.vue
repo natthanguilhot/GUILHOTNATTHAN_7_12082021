@@ -44,6 +44,7 @@ export default {
                 name: "",
                 lastname:'',
                 pp: "",
+                account_type: "",
             },
             bodyUserId:{
                 userId:JSON.parse(localStorage.getItem('authgroupomania')).userId,
@@ -69,6 +70,7 @@ export default {
                 this.user.name = user.name;
                 this.user.lastname = user.lastname;
                 this.user.pp = user.profile_picture;
+                this.user.account_type = user.account_type;
             })
             .catch(err => err.json())
         },

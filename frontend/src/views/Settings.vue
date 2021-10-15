@@ -65,7 +65,6 @@ export default {
   methods: {
     requestUserInformations(){
       this.bodyUserId.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
-      console.log('Requête de récupération des données envoyée !')
       fetch('http://localhost:3000/api/auth/user/'+ `${this.bodyUserId.userId}`,{
         method: 'POST',
         headers: {
@@ -77,7 +76,6 @@ export default {
         })
         .then(response => response.json())
         .then(userInfo => {
-          console.log('Données reçu !');
           this.user.lastname = userInfo.lastname;
           this.user.name = userInfo.name;
           this.user.job = userInfo.job;
