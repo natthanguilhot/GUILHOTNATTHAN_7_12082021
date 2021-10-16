@@ -35,7 +35,8 @@ exports.signup = (req,res,next) => {
             console.log('Email trouvé => Abandon de création d\'un nouvel utilisateur !')
             res.status(403).json({ error : 'Un compte est déjà associé à cet adresse mail !'})
         }    
-    });
+    })
+    .catch(error => res.status(500).json({ error }))
 };
 
 exports.login = (req,res,next) => {
