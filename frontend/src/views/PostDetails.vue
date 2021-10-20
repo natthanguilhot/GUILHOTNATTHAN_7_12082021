@@ -13,8 +13,8 @@
             <p>{{ post.content }}</p>
             <a v-if="post.files" :href="post.files" target="_blank" rel="noopener"><img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border"></a>
             <div class="flex jusitfy-start items-center mt-4">
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative" @click="sendRequestLikePost(post.postId)"><i class="fas fa-thumbs-up"></i><span class="absolute -top-6">{{ likes.length }}</span></button>
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6">{{ likes.length }}</span></button>
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ likes.length }}</span></button>
+                <!-- <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6">{{ likes.length }}</span></button> -->
             </div>
             <div class="w-full">
                 <div id="comments" class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl w-full h-auto relative" v-for="comment in comments" :key="comment.id">
@@ -36,6 +36,9 @@
                 </div>
                 <button @click="addComment" class="border rounded-2xl text-primary px-4 py-2 my-2 hover:text-white hover:bg-primary">Ajouter votre commentaire</button>
             </div>
+        </div>
+        <div v-if="notifLike" class="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-green-400 m-4 py-2 px-4 rounded-2xl spawn_animation">
+            <p>Vote envoyé !</p>
         </div>
     </div>
 </template>
@@ -63,6 +66,7 @@ export default {
                 userId:'',
                 commentId:'',
             },
+            notifLike:false,
         }
     },
     methods: {
@@ -113,8 +117,29 @@ export default {
                 this.post = posts;
             })
         },
-        test(){
-            console.log('test');
+        sendRequestLikePost(postId){
+            this.notifLike = true;
+            let bodyLike = {
+                userId : this.userId,
+                postId : postId,
+                commentId : null,
+            };
+            fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json', 
+                    'Content-Type': 'application/json',
+                    "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
+                },
+                body: JSON.stringify(bodyLike),
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+                setTimeout(() => {
+                    this.notifLike = false;
+                },5000)
+            });
         },
         getUserId(){
             this.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
@@ -150,6 +175,27 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.spawn_animation {
+    animation: spawn_animation 5s ease 0s normal both;
+}
+@keyframes spawn_animation {
+    0%{
+        transform: translateY(50px);
+        opacity:0;
+    }
+    10%{
+        transform: translateY(0px);
+        opacity:1;
+    }
+    90%{
+        transform: translateY(0px);
+        opacity:1;
+    }
+    100%{
+        transform: translateY(50px);
+        opacity:0;
+    }
+}
 
 </style>

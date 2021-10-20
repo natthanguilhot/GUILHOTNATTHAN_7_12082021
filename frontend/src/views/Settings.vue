@@ -5,7 +5,6 @@
         <label for="profile_picture" class=" cursor-pointer rounded-full hover:opacity-80 relative">
           <img v-if="user.profile_picture" :src="user.profile_picture" alt="Votre photo de profil" class="rounded-full h-32 w-32"/>
           <i class="fas fa-camera absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black"></i>
-          <!-- <img v-if="{}"/> TODO : afficher l'image déposé-->
         </label>
         <input id="profile_picture" name="profile_picture" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden" @change="updateUserInformations"/>
       </div>
@@ -25,7 +24,7 @@
       <p v-if="error" class="text-primary error_message mt-4 -mb-10">{{ error }}</p>
       <p v-if="response" class="text-green-600 error_message mt-4 -mb-10">{{ response }}</p>
     </form>
-    <button @click="this.modaleDeleteAccount = true" type="button" class="text-primary mt-20">Supprimer le compte <i class="fas fa-trash"></i></button>
+    <button @click="this.modaleDeleteAccount = true" type="button" class="text-black mt-20 bg-primary px-4 py-2 rounded-2xl hover:bg-black hover:text-primary focus:bg-black focus:text-primary">Supprimer le compte <i class="fas fa-trash"></i></button>
 
     <div v-if="modaleDeleteAccount" class="fixed w-full h-screen inset-0 flex justify-center items-center bg-gray-200 bg-opacity-90">
       <div class="bg-white border rounded-2xl p-8 flex justify-center items-center flex-col relative m-1">

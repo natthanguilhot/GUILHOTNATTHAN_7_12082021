@@ -9,9 +9,9 @@
     </div>
     <nav class="lg:hidden">
       <ul class="flex justify-around items-center h-20">
-        <li><router-link to="/main/feed"><i class="fas fa-home"></i></router-link></li>
-        <li><router-link to="/main/profil"><i class="fas fa-user"></i></router-link></li>
-        <li><router-link to="/main/settings"><i class="fas fa-user-cog"></i></router-link></li>
+        <li><router-link to="/main/feed" aria-label="Fil d'actualités"><i class="fas fa-home"></i></router-link></li>
+        <li><router-link to="/main/profil" aria-label="Profil"><i class="fas fa-user"></i></router-link></li>
+        <li><router-link to="/main/settings" aria-label="Paramètres"><i class="fas fa-user-cog"></i></router-link></li>
       </ul>
     </nav>
   </header>

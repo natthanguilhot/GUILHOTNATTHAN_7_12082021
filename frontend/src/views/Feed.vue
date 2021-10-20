@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col justify-center items-center w-full max-w-3xl">
         <FormPost @MajPost="APIRequest"/>
-        <router-link :to="{name: 'FeedId', params : {id: post.postId} }" v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
+        <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
                 <!-- <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div> -->
                 <img v-if="post.User.profile_picture" :src="post.User.profile_picture" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
@@ -10,18 +10,23 @@
                     <h2>{{ post.User.name }} {{post.User.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
                 </div>
-                <button v-if="post.userId == this.userId" @click="deletePost(post.postId)" type="button" class=" border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
+                <button v-if="post.userId == this.userId" @click="deletePost(post.postId)" aria-label="Suppression du poste" type="button" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
-            <p>{{ post.content }}</p>
-            <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
+            <router-link :to="{name: 'FeedId', params : {id: post.postId}}" class="w-full">
+                <p class="w-full">{{ post.content }}</p>
+                <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
+            </router-link>
             <div class="flex jusitfy-start items-center mt-4">
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-thumbs-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
+                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
+                <!-- <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button> -->
                 <div class="ml-4">
                     {{ post.Comments.length }} commentaire(s)
                 </div>
             </div>
-        </router-link>
+        </div>
+        <div v-if="notifLike" class="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-green-400 m-4 py-2 px-4 rounded-2xl spawn_animation">
+            <p>Vote envoyé !</p>
+        </div>
     </div>
 </template>
 
@@ -36,6 +41,7 @@ export default {
         return {
             listPosts: [],
             userId : undefined,
+            notifLike:false,
         }
     },
     methods: {
@@ -62,11 +68,11 @@ export default {
             this.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
         },
         sendRequestLikePost(postId){
+            this.notifLike = true;
             let bodyLike = {
                 userId : this.userId,
                 postId : postId,
                 commentId : null,
-                isLiked : 1,
             };
             fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
                 method: 'POST',
@@ -80,6 +86,9 @@ export default {
             .then(response => response.json())
             .then(response => {
                 console.log(response);
+                setTimeout(() => {
+                    this.notifLike = false;
+                },5000)
             });
         },
         sendRequestDislikePost(postId){

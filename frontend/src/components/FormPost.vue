@@ -6,10 +6,11 @@
                 <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
             </div>
             <div class="h-full w-9/12 sm:w-full p-1">
+                <label for="content">test</label>
                 <textarea v-model="post.content" name="content" id="content" type="text" :placeholder="'Quoi de neuf ' + user.name + ' ?'" minlength="1" class="w-full h-full rounded p-1 focus:border-red-600 focus:border" />
             </div>
         </div>
-        <img id="myimage" src="" class="rounded-2xl">
+        <img id="myimage" src="" alt="Votre image" class="rounded-2xl">
         <div class="flex justify-between items-center w-full p-1">
             <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12 max-w-[120px] hover:opacity-75"><i class="fas fa-link mr-4"></i>Image</label>
             <input @change="onFileSelected" id="file" name="file" type="file" accept="image/png, image/jpeg, image/jpg" class="w-0 h-0"/>
@@ -47,6 +48,7 @@ export default {
             formdata.append("userId", this.post.userId);
             formdata.append("content", this.post.content);
             formdata.append("files", inputFile.files[0]);
+            console.log(this.post.content);
             fetch('http://localhost:3000/api/posts',{
                 method: 'POST',
                 headers: {
