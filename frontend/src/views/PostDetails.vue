@@ -8,7 +8,7 @@
                     <h2>{{ user.name }} {{user.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
                 </div>
-                <button v-if="post.userId == this.userId" @click="deletePost(post.postId)" type="button" aria-label="Supprimer le poste" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
+                <button v-if="post.userId == this.userId || $store.state.user.account_type == true" @click="deletePost(post.postId)" type="button" aria-label="Supprimer le poste" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
             <p>{{ post.content }}</p>
             <a v-if="post.files" :href="post.files" target="_blank" rel="noopener"><img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border"></a>
@@ -17,13 +17,13 @@
                 <!-- <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6">{{ likes.length }}</span></button> -->
             </div>
             <div class="w-full">
-                <div id="comments" class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl w-full h-auto relative" v-for="comment in comments" :key="comment.id">
+                <div id="comments" :data-id="comment.id" class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl w-full h-auto relative" v-for="comment in comments" :key="comment.id">
                     <a :href="comment.User.profile_picture" class="w-10 h-10 block" target="_blank" rel="noopener"><img alt="Photo de l'utilisateur" :src="comment.User.profile_picture" class="w-full h-full rounded-2xl mr-1"/></a>
                     <div class="flex flex-col ml-2">
                         <p class="text-xl">{{ comment.User.lastname }} {{comment.User.name}}</p>
                         <p class="w-full break-all">{{ comment.content }}</p>
                     </div>
-                    <button v-if="comment.user_id == this.userId" @click="deleteMyComment(comment.id)" type="button" aria-label="Supprimer le commentaire" class=" border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
+                    <button v-if="post.userId == this.userId || $store.state.user.account_type == true || comment.user_id == this.userId" @click="deleteMyComment(comment.id)" type="button" aria-label="Supprimer le commentaire" class=" border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
                     <!-- <div class="flex flex-col jusitfy-start items-center">
                         <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="test"><i class="fas fa-thumbs-up"></i></button>
                         <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="test"><i class="fas fa-thumbs-down"></i></button>

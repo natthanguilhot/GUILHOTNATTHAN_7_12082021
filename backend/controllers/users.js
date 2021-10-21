@@ -21,7 +21,7 @@ exports.signup = (req,res,next) => {
                         const user = Users.create({
                             email: req.body.email,
                             password: hash,
-                            account_type:0,
+                            account_type:0, // 0 pour normal, 1 pour admin
                             lastname:req.body.lastname, 
                             name:req.body.name,
                             job:req.body.job,

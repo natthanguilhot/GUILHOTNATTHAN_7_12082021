@@ -9,7 +9,7 @@
                     <h2>{{ post.User.name }} {{post.User.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
                 </div>
-                <button v-if="post.userId == this.userId" @click="deletePost(post.postId)" aria-label="Suppression du poste" type="button" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
+                <button v-if="post.userId == this.userId || $store.state.user.account_type == true" @click="deletePost(post.postId)" aria-label="Suppression du poste" type="button" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
             <router-link :to="{name: 'FeedId', params : {id: post.postId}}" class="w-full">
                 <p v-if="post.content" class="w-full">{{ post.content }}</p>
@@ -31,6 +31,8 @@
 
 <script>
 import FormPost from "@/components/FormPost";
+import store from "@/store/index";
+
 export default {
     name: "Feed",
     components:{
@@ -113,6 +115,7 @@ export default {
         }
     },
     beforeMount() {
+        store.dispatch('getUserInformations');
         this.APIRequest();
         this.getUserId();
     }

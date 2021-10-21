@@ -9,7 +9,7 @@ export default createStore({
       lastName: '',
       profile_picture: '',
       job: '',
-      account_type: '',
+      account_type: false,
     },
   },
   mutations: {
@@ -27,27 +27,32 @@ export default createStore({
       state.user.lastName = user.lastName;
       state.user.profile_picture = user.profile_picture;
       state.user.job = user.job;
-      state.user.account_ = user.account_;
+      state.user.account_type = user.account_type;
     },
   },
   actions: {
-    getUserInformations(context, userId){
-      this.bodyUserId.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
-      fetch('http://localhost:3000/api/auth/user/'+ `${this.bodyUserId.userId}`,{
+    getUserInformations(context){
+      context.state.user.id = JSON.parse(localStorage.getItem('authgroupomania')).userId;
+      let userId = context.state.user.id;
+      let body = {
+        userId : context.state.user.id,
+      }
+      fetch('http://localhost:3000/api/auth/user/'+ `${userId}`,{
         method: 'POST',
         headers: {
           'Accept': 'application/json', 
           'Content-Type': 'application/json',
           "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
         },
-        body: JSON.stringify(this.bodyUserId),
+        body: JSON.stringify(body),
         })
         .then(response => response.json())
         .then(userInfo => {
-          this.user.lastname = userInfo.lastname;
-          this.user.name = userInfo.name;
-          this.user.job = userInfo.job;
-          this.user.profile_picture = userInfo.profile_picture;
+          context.state.user.lastname = userInfo.lastname;
+          context.state.user.name = userInfo.name;
+          context.state.user.job = userInfo.job;
+          context.state.user.profile_picture = userInfo.profile_picture;
+          context.state.user.account_type = userInfo.account_type;
         })
         .catch(err=>{console.log(err)})
     },
