@@ -6,13 +6,13 @@
                 <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
             </div>
             <div class="h-full w-9/12 sm:w-full p-1">
-                <label for="content">test</label>
+                <label for="content">Partagez avec vos collègues :</label>
                 <textarea v-model="post.content" name="content" id="content" type="text" :placeholder="'Quoi de neuf ' + user.name + ' ?'" minlength="1" class="w-full h-full rounded p-1 focus:border-red-600 focus:border" />
             </div>
         </div>
-        <img id="myimage" src="" alt="Votre image" class="rounded-2xl">
+        <img id="myimage" src="" alt="Prévisualisation de votre fichier" class="rounded-2xl">
         <div class="flex justify-between items-center w-full p-1">
-            <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12 max-w-[120px] hover:opacity-75"><i class="fas fa-link mr-4"></i>Image</label>
+            <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12 max-w-[120px] hover:opacity-75"><i class="fas fa-link pr-4 hidden sm:contents"></i>GIF/JGP/PNG</label>
             <input @change="onFileSelected" id="file" name="file" type="file" accept="image/png, image/jpeg, image/jpg" class="w-0 h-0"/>
             <button @click.prevent="sendPost" type="submit" class="bg-primary rounded-2xl text-center m-1 text-white h-10 w-4/12">Envoyez !</button>
         </div>
@@ -26,7 +26,7 @@ export default {
     data(){
         return {
             post:{
-                userId:JSON.parse(localStorage.getItem('authgroupomania')).userId,
+                userId: JSON.parse(localStorage.getItem('authgroupomania')).userId,
                 content:"",
                 files:null
             },
@@ -37,7 +37,7 @@ export default {
                 pp: "",
             },
             bodyUserId:{
-                userId:JSON.parse(localStorage.getItem('authgroupomania')).userId,
+                userId: JSON.parse(localStorage.getItem('authgroupomania')).userId,
             },
         }
     },
@@ -48,7 +48,6 @@ export default {
             formdata.append("userId", this.post.userId);
             formdata.append("content", this.post.content);
             formdata.append("files", inputFile.files[0]);
-            console.log(this.post.content);
             fetch('http://localhost:3000/api/posts',{
                 method: 'POST',
                 headers: {
@@ -58,12 +57,15 @@ export default {
             })
             .then(response => response.json())
             .then(response => {
-                this.$emit('MajPost');
                 this.post.content = null,
                 this.response = response.message;
+                let imgtag = document.getElementById("myimage");
+                imgtag.src = null;
+                let file = document.querySelector('#file');
+                file.value = null;
                 setTimeout(() => {
                     this.response = null;
-                    this.files = null
+                    this.files = null;
                 }, 5000);
             })
         },
@@ -71,13 +73,9 @@ export default {
             var selectedFile = event.target.files[0];
             var reader = new FileReader();
             var imgtag = document.getElementById("myimage");
-            // let tst = document.querySelector('#file');
             imgtag.title = selectedFile.name;
             reader.onload = function(event) {
                 imgtag.src = event.target.result;
-                setTimeout(() => {
-                    imgtag.src = "";
-                }, 5000)
             };
             reader.readAsDataURL(selectedFile);
             

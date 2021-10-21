@@ -24,7 +24,7 @@
       <p v-if="error" class="text-primary error_message mt-4 -mb-10">{{ error }}</p>
       <p v-if="response" class="text-green-600 error_message mt-4 -mb-10">{{ response }}</p>
     </form>
-    <button @click="this.modaleDeleteAccount = true" type="button" class="text-black mt-20 bg-primary px-4 py-2 rounded-2xl hover:bg-black hover:text-primary focus:bg-black focus:text-primary">Supprimer le compte <i class="fas fa-trash"></i></button>
+    <button @click="this.modaleDeleteAccount = true" type="button" class="text-white mt-20 bg-primary px-4 py-2 rounded-2xl hover:bg-black hover:text-white focus:bg-black focus:text-white">Supprimer le compte <i class="fas fa-trash"></i></button>
 
     <div v-if="modaleDeleteAccount" class="fixed w-full h-screen inset-0 flex justify-center items-center bg-gray-200 bg-opacity-90">
       <div class="bg-white border rounded-2xl p-8 flex justify-center items-center flex-col relative m-1">

@@ -3,8 +3,7 @@
         <FormPost @MajPost="APIRequest"/>
         <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
-                <!-- <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center"><i class="fas fa-user-alt"></i></div> -->
-                <img v-if="post.User.profile_picture" :src="post.User.profile_picture" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
+                <img v-if="post.User.profile_picture" :src="post.User.profile_picture" :alt="'Photo profil de '+ post.User.name + post.User.lastname" class="bg-gray-900 h-16 w-16 rounded-2xl">
                 <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ post.User.name }} {{post.User.lastname}}</h2>
@@ -17,7 +16,7 @@
                 <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
             </router-link>
             <div class="flex jusitfy-start items-center mt-4">
-                <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
+                <button type="button" class="btn_vote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
                 <!-- <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative group" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button> -->
                 <div class="ml-4">
                     {{ post.Comments.length }} commentaire(s)
@@ -140,5 +139,29 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.spawn_animation {
+    animation: spawn_animation 5s ease 0s normal both;
+}
+@keyframes spawn_animation {
+    0%{
+        transform: translateY(50px);
+        opacity:0;
+    }
+    10%{
+        transform: translateY(0px);
+        opacity:1;
+    }
+    90%{
+        transform: translateY(0px);
+        opacity:1;
+    }
+    100%{
+        transform: translateY(50px);
+        opacity:0;
+    }
+}
+.btn_vote {
+    @apply h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative;
+}
 </style>
