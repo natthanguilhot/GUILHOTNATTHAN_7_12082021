@@ -12,7 +12,7 @@
                 <button v-if="post.userId == this.userId" @click="deletePost(post.postId)" aria-label="Suppression du poste" type="button" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
             <router-link :to="{name: 'FeedId', params : {id: post.postId}}" class="w-full">
-                <p class="w-full">{{ post.content }}</p>
+                <p v-if="post.content" class="w-full">{{ post.content }}</p>
                 <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
             </router-link>
             <div class="flex jusitfy-start items-center mt-4">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div v-if="notifLike" class="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-green-400 m-4 py-2 px-4 rounded-2xl spawn_animation">
-            <p>Vote envoyé !</p>
+            <p>{{ notifLike.message }}</p>
         </div>
     </div>
 </template>
@@ -40,7 +40,7 @@ export default {
         return {
             listPosts: [],
             userId : undefined,
-            notifLike:false,
+            notifLike:"",
         }
     },
     methods: {
@@ -84,31 +84,11 @@ export default {
             })
             .then(response => response.json())
             .then(response => {
-                console.log(response);
+                this.notifLike = response;
+                this.APIRequest();
                 setTimeout(() => {
-                    this.notifLike = false;
-                },5000)
-            });
-        },
-        sendRequestDislikePost(postId){
-            let bodyDislike = {
-                userId : this.userId,
-                postId : postId,
-                commentId : null,
-                isLiked : 0,
-            };
-            fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json', 
-                    'Content-Type': 'application/json',
-                    "authorization" : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
-                },
-                body: JSON.stringify(bodyDislike),
-            })
-            .then(response => response.json())
-            .then(response => {
-                console.log(response);
+                    this.notifLike = null;
+                },2100)
             });
         },
         deletePost(postId) {
@@ -141,7 +121,7 @@ export default {
 
 <style lang="scss">
 .spawn_animation {
-    animation: spawn_animation 5s ease 0s normal both;
+    animation: spawn_animation 2s ease 0s normal both;
 }
 @keyframes spawn_animation {
     0%{

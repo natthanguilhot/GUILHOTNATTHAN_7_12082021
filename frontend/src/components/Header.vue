@@ -27,6 +27,6 @@ export default {
 header nav ul li i {
   font-size: 3rem;
   line-height: 4rem;
-  color: rgb(200, 60, 60);
+  @apply text-primary
 }
 </style> 

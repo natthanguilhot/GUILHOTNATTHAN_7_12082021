@@ -7,10 +7,10 @@
             </div>
             <div class="h-full w-9/12 sm:w-full p-1">
                 <label for="content">Partagez avec vos collègues :</label>
-                <textarea v-model="post.content" name="content" id="content" type="text" :placeholder="'Quoi de neuf ' + user.name + ' ?'" minlength="1" class="w-full h-full rounded p-1 focus:border-red-600 focus:border" />
+                <textarea v-model="post.content" name="content" id="content" type="text" :placeholder="'Quoi de neuf ' + user.name + ' ?'" minlength="1" required="required" class="w-full h-full rounded p-1 focus:border-red-600 focus:border" />
             </div>
         </div>
-        <img id="myimage" src="" alt="Prévisualisation de votre fichier" class="rounded-2xl">
+        <img v-if="file" id="myimage" src="" alt="Prévisualisation de votre fichier" class="rounded-2xl">
         <div class="flex justify-between items-center w-full p-1">
             <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12 max-w-[120px] hover:opacity-75"><i class="fas fa-link pr-4 hidden sm:contents"></i>GIF/JGP/PNG</label>
             <input @change="onFileSelected" id="file" name="file" type="file" accept="image/png, image/jpeg, image/jpg" class="w-0 h-0"/>
@@ -30,7 +30,7 @@ export default {
                 content:"",
                 files:null
             },
-            response:null,
+            response:'',
             user:{
                 name: "",
                 lastname:'',
@@ -39,46 +39,60 @@ export default {
             bodyUserId:{
                 userId: JSON.parse(localStorage.getItem('authgroupomania')).userId,
             },
+            file: false,
         }
     },
     methods:{
+        switchThisFile(valeur){
+            this.file = valeur;
+        },
         sendPost(){
             var formdata = new FormData();
             const inputFile = document.querySelector('#file');
-            formdata.append("userId", this.post.userId);
-            formdata.append("content", this.post.content);
-            formdata.append("files", inputFile.files[0]);
-            fetch('http://localhost:3000/api/posts',{
-                method: 'POST',
-                headers: {
-                    'Authorization' : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
-                },
-                body: formdata,
-            })
-            .then(response => response.json())
-            .then(response => {
-                this.post.content = null,
-                this.response = response.message;
-                let imgtag = document.getElementById("myimage");
-                imgtag.src = null;
-                let file = document.querySelector('#file');
-                file.value = null;
+            if(!inputFile.files[0] && this.post.content == ''){
+                this.response = "Veuillez remplir le formualire !"
                 setTimeout(() => {
-                    this.response = null;
-                    this.files = null;
-                }, 5000);
-            })
+                    this.response = '';
+                }, 2250);
+            } else {
+                formdata.append("userId", this.post.userId);
+                formdata.append("content", this.post.content);
+                formdata.append("files", inputFile.files[0]);
+                fetch('http://localhost:3000/api/posts',{
+                    method: 'POST',
+                    headers: {
+                        'Authorization' : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
+                    },
+                    body: formdata,
+                })
+                .then(response => response.json())
+                .then(response => {
+                    this.switchThisFile(false);
+                    this.$emit('MajPost'); // Emet l'evenement qui met à jour la vue
+                    this.post.content = "",
+                    this.response = response.message;
+                    let imgtag = document.getElementById("myimage");
+                    imgtag.src = null;
+                    let file = document.querySelector('#file');
+                    file.value = null;
+                    setTimeout(() => {
+                        this.response = null;
+                    }, 3000);
+                })
+            }
         },
         onFileSelected(event) {
-            var selectedFile = event.target.files[0];
-            var reader = new FileReader();
-            var imgtag = document.getElementById("myimage");
-            imgtag.title = selectedFile.name;
-            reader.onload = function(event) {
-                imgtag.src = event.target.result;
-            };
-            reader.readAsDataURL(selectedFile);
-            
+            this.switchThisFile(true);
+            setTimeout(() => {
+                var selectedFile = event.target.files[0];
+                var reader = new FileReader();
+                var imgtag = document.getElementById("myimage");
+                imgtag.title = selectedFile.name;
+                reader.onload = function(event) {
+                    imgtag.src = event.target.result;
+                };
+                reader.readAsDataURL(selectedFile);
+            }, 100);
         },
         getUserInformations(){
             fetch('http://localhost:3000/api/auth/user/' + `${this.bodyUserId.userId}`,{

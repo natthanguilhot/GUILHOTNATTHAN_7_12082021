@@ -39,7 +39,7 @@
             </div>
         </div>
         <div v-if="notifLike" class="fixed bottom-0 left-1/2 transform -translate-x-1/2 bg-green-400 m-4 py-2 px-4 rounded-2xl spawn_animation">
-            <p>Vote envoyé !</p>
+            <p>{{ notifLike.message }}</p>
         </div>
     </div>
 </template>
@@ -67,7 +67,7 @@ export default {
                 userId:'',
                 commentId:'',
             },
-            notifLike:false,
+            notifLike:"",
         }
     },
     methods: {
@@ -119,7 +119,6 @@ export default {
             })
         },
         sendRequestLikePost(postId){
-            this.notifLike = true;
             let bodyLike = {
                 userId : this.userId,
                 postId : postId,
@@ -136,10 +135,11 @@ export default {
             })
             .then(response => response.json())
             .then(response => {
-                console.log(response);
+                this.notifLike = response;
+                this.APIRequest();
                 setTimeout(() => {
-                    this.notifLike = false;
-                },5000)
+                    this.notifLike = "";
+                },2100)
             });
         },
         getUserId(){
