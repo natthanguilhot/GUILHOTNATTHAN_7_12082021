@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Users, Posts, Comments, Likes } = require("../models");
+const models = require("../models");
 const fs = require('fs');
 
 exports.signup = (req,res,next) => {
@@ -74,6 +75,20 @@ exports.getOneUser = (req,res,next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+exports.getOneUserProfil = (req,res,next) => {
+    Users.findOne({ where : {id: req.body.getUserId},
+        attributes : ['id','name','lastname','job','profile_picture'],
+        include : [
+            { model : models.posts,
+                include : [{ model: models.likes}]
+            }
+        ]
+    })
+    .then(user => {
+        res.status(200).json(user);
+    })
+    .catch(error => res.status(500).json({ error }));
+};
 
 exports.userUpdate = (req,res,next) => {
     Users.findOne({where: {id: req.body.userId}})

@@ -3,7 +3,7 @@
     <form id="signup" class="w-10/12 rounded-2xl m-auto flex flex-col justify-center items-center bg-white">
       <div class="flex flex-col justify-center items-center m-2 w-full">
         <label for="profile_picture" class=" cursor-pointer rounded-full hover:opacity-80 relative">
-          <img v-if="user.profile_picture" :src="user.profile_picture" alt="Votre photo de profil" class="rounded-full h-32 w-32"/>
+          <img v-if="user.profile_picture" :src="user.profile_picture" alt="Votre photo de profil" class="rounded-full h-32 w-32 object-cover"/>
           <i class="fas fa-camera absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-black"></i>
         </label>
         <input id="profile_picture" name="profile_picture" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden" @change="updateUserInformations"/>

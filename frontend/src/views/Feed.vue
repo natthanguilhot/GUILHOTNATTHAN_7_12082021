@@ -4,7 +4,6 @@
         <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
                 <img v-if="post.User.profile_picture" :src="post.User.profile_picture" :alt="'Photo profil de '+ post.User.name + post.User.lastname" class="bg-gray-900 h-16 w-16 rounded-2xl">
-                <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ post.User.name }} {{post.User.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
@@ -12,7 +11,7 @@
                 <button v-if="post.userId == this.userId || $store.state.user.account_type == true" @click="deletePost(post.postId)" aria-label="Suppression du poste" type="button" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
             <router-link :to="{name: 'FeedId', params : {id: post.postId}}" class="w-full">
-                <p v-if="post.content" class="w-full">{{ post.content }}</p>
+                <p v-if="post.content" class="w-full">{{ returnLine(post.content) }}</p>
                 <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
             </router-link>
             <div class="flex jusitfy-start items-center mt-4">
@@ -64,6 +63,13 @@ export default {
                     post.createdAt = 'Créé le ' + splitDate[2] + '/' + splitDate[1] + '/' + splitDate[0] + ' à ' + trueHour + ':' + splitTime[1];
                 }
             });
+        },
+        returnLine(content){
+            let contenu = content;
+            console.log(contenu);
+            // TODO : Retourner le contenu avec les bon  retour à la ligne
+            let returnLine = contenu.split('\n').join(' <br/> ');
+            return returnLine;
         },
         getUserId(){
             this.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;

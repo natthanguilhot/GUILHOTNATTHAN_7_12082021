@@ -13,6 +13,9 @@ router.post('/login', userCtrl.login);
 // GET ONE USER
 router.post('/user/:id', auth, userCtrl.getOneUser);
 
+// GET ONE USER PROFILE
+router.post('/userprofil/:id', auth, userCtrl.getOneUserProfil)
+
 //MODIFY USER
 router.put('/user/:id', auth, multer, userCtrl.userUpdate);
 

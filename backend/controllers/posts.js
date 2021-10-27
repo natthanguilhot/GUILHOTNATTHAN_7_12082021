@@ -34,7 +34,7 @@ exports.getAllPosts = (req, res, next) => {
         {
             model : models.comments,
         }
-    ],
+        ],
     })
     .then(posts => {
         res.status(200).json(posts)
