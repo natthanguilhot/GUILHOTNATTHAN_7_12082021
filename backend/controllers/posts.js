@@ -3,7 +3,7 @@ const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
     console.log(req.body.content);
-    if(req.file){
+    if(req.file){ // Verifier si y a un content
         models.Posts.create({
             creator: req.body.userId,
             files: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
@@ -24,6 +24,7 @@ exports.createPost = (req, res, next) => {
 exports.getAllPosts = (req, res, next) => {
     models.Posts.findAll({
         attributes : [['id','postId'],['creator','userId'],'files','content','createdAt','updatedAt'],
+        order: [["createdAt", "DESC"]],
         include : [{ 
             model : models.users,
             attributes : ['name','lastname' , 'profile_picture'],

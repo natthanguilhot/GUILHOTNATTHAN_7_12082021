@@ -3,7 +3,6 @@
         <div class="border rounded-2xl h-auto bg-white w-11/12 m-1 my-6 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
                 <img v-if="user.profile_picture" :src="user.profile_picture" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
-                <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ user.name }} {{user.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
@@ -11,10 +10,9 @@
                 <button v-if="post.userId == this.userId || $store.state.user.account_type == true" @click="deletePost(post.postId)" type="button" aria-label="Supprimer le poste" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
             <p>{{ post.content }}</p>
-            <a v-if="post.files" :href="post.files" target="_blank" rel="noopener"><img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border"></a>
+            <a v-if="post.files" :href="post.files" target="_blank" rel="noopener" class="w-full"><img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border"></a>
             <div class="flex jusitfy-start items-center mt-4">
                 <button type="button" class="btn_vote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ likes.length }}</span></button>
-                <!-- <button type="button" class="h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative" @click="sendRequestDislikePost(post.postId)"><i class="fas fa-thumbs-down"></i><span class="absolute -top-6">{{ likes.length }}</span></button> -->
             </div>
             <div class="w-full">
                 <div id="comments" :data-id="comment.id" class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl w-full h-auto relative" v-for="comment in comments" :key="comment.id">
@@ -24,10 +22,6 @@
                         <p class="w-full break-all">{{ comment.content }}</p>
                     </div>
                     <button v-if="post.userId == this.userId || $store.state.user.account_type == true || comment.user_id == this.userId" @click="deleteMyComment(comment.id)" type="button" aria-label="Supprimer le commentaire" class=" border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
-                    <!-- <div class="flex flex-col jusitfy-start items-center">
-                        <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="test"><i class="fas fa-thumbs-up"></i></button>
-                        <button type="button" class="h-7 w-7 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary" @click="test"><i class="fas fa-thumbs-down"></i></button>
-                    </div> -->
                 </div>
             </div> 
             <div class="w-full flex flex-col justify-center items-start">

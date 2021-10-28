@@ -19,7 +19,7 @@
                 <button v-if="post.creator == $store.state.user.id || $store.state.user.account_type == true" @click="deletePost(post.postId)" aria-label="Suppression du poste" type="button" class="border border-primary rounded-full px-3 py-1 absolute top-1 right-1 text-primary hover:text-white hover:bg-primary"><i class="fas fa-trash"></i></button>
             </div>
             <router-link :to="{name: 'FeedId', params : {id: post.id}}" class="w-full">
-                <p v-if="post.content" class="w-full">{{ post.content }}</p>
+                <p v-if="post.content" class="w-full" v-html="returnLine(post.content)"></p>
                 <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
             </router-link>
             <div class="flex jusitfy-start items-center mt-4">
@@ -64,6 +64,12 @@ export default {
         this.userInformations = response;
         console.log(this.userInformations);
       });
+    },
+    returnLine(content){
+      let contenu = content;
+      console.log(contenu);
+      let returnLine = contenu.split('\n').join(' <br/> ');
+      return returnLine;
     },
     formatCreatedAt(date){
       let splitDateTime = date.split('T');
