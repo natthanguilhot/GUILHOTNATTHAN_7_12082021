@@ -1,6 +1,6 @@
 ## Préréquis
 
-- Nodejs : https://nodejs.org/en/
+- Nodejs : https://nodejs.org/fr/
 - Système de BDD (MySQLWorkbench, PhpMyAdmin)
 
 ## Installer le projet
@@ -36,3 +36,5 @@ Enfin,
 2. Tapez : nodemon
 
 Votre serveur local est normalement opérationnel ! 👍
+
+Le projet entier est installé correctement !
