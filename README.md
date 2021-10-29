@@ -32,3 +32,5 @@ Enfin,
 
 1. Ouvrir un terminal de commande dans le dossier backend
 2. Tapez : nodemon
+
+Votre serveur local est normalement opérationnel ! 👍
