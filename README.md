@@ -26,6 +26,8 @@ Dans le dossier back-end
 	- PASSWORD_DATABASE=VotreMotDePasseDeBDD
 	- TOKEN=VotreToken
 
+- Configurez également le fichier config.json qui se trouve dans backend -> config -> config.json
+
 - Importer les données dans votre système de BDD qui se trouvent dans Docs -> groupomania.sql
 
 Enfin,
