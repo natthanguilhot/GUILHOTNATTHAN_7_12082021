@@ -20,11 +20,11 @@ Dans le dossier back-end
 - Créez un fichier .env
 
 - Ajoutez les valeurs suivantes : 
-1. HOST=VotreNomDhote
-2. NAME_DATABASE=VotreNomDeBDD
-3. USER_DATABASE=VotreNomDutilisateurDeBDD
-4. PASSWORD_DATABASE=VotreMotDePasseDeBDD
-5. TOKEN=VotreToken
+	- HOST=VotreNomDhote
+	- NAME_DATABASE=VotreNomDeBDD
+	- USER_DATABASE=VotreNomDutilisateurDeBDD
+	- PASSWORD_DATABASE=VotreMotDePasseDeBDD
+	- TOKEN=VotreToken
 
 - Importer les données dans votre système de BDD qui se trouvent dans Docs -> groupomania.sql
 
