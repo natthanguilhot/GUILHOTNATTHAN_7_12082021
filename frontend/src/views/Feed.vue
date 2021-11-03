@@ -3,7 +3,7 @@
         <FormPost @MajPost="APIRequest"/>
         <div v-for="post in listPosts" :key="post.postId" :data-postid="post.postId" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
-                <img v-if="post.User.profile_picture" :src="post.User.profile_picture" :alt="'Photo profil de '+ post.User.name + post.User.lastname" class="bg-gray-900 h-16 w-16 rounded-2xl object-cover">
+                <img :src="post.User.profile_picture" :alt="'Photo profil de '+ post.User.name + post.User.lastname" class="bg-gray-900 h-16 w-16 rounded-2xl object-cover">
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ post.User.name }} {{post.User.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
@@ -15,7 +15,8 @@
                 <img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border">
             </router-link>
             <div class="flex jusitfy-start items-center mt-4">
-                <button type="button" class="btn_vote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
+                <button v-if="post.isLiked" type="button" class="btn_unvote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-down"></i><span class="absolute -top-6 text-primary group-hover:text-red-600">{{ post.Likes.length }}</span></button>
+                <button v-else type="button" class="btn_vote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ post.Likes.length }}</span></button>
                 <div class="ml-4">
                     {{ post.Comments.length }} commentaire(s)
                 </div>
@@ -54,18 +55,26 @@ export default {
             .then(response => response.json())
             .then(posts => {
                 this.listPosts = Object.values(posts);
+                console.log(this.listPosts);
                 for (const post of this.listPosts) { // On split les formatt actuel pour les regrouper au format voulu
                     let splitDateTime = post.createdAt.split('T');
                     let splitDate = splitDateTime[0].split('-');
                     let splitTime = splitDateTime[1].split(':');
                     let trueHour = parseInt(splitTime[0])+2; // On rajoute 2 heures pour faire correspondre à l'heure actuelle
                     post.createdAt = 'Créé le ' + splitDate[2] + '/' + splitDate[1] + '/' + splitDate[0] + ' à ' + trueHour + ':' + splitTime[1];
+                    let isLiked = false;
+                    for (const like of post.Likes) {
+                        if(like.user_id == this.userId) {
+                            isLiked = true;
+                        }
+                    }
+                    post.isLiked = isLiked;
                 }
             });
         },
         returnLine(content){
             let contenu = content;
-            console.log(contenu);
+            //console.log(contenu);
             let returnLine = contenu.split('\n').join(' <br/> ');
             return returnLine;
         },
@@ -150,5 +159,8 @@ export default {
 }
 .btn_vote {
     @apply h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative;
+}
+.btn_unvote {
+    @apply h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-white bg-primary hover:text-primary hover:bg-white relative;
 }
 </style>

@@ -12,7 +12,8 @@
             <p>{{ post.content }}</p>
             <a v-if="post.files" :href="post.files" target="_blank" rel="noopener" class="w-full"><img v-if="post.files" :src="post.files" alt="Image liée au post" class="rounded-2xl my-4 mx-auto border"></a>
             <div class="flex jusitfy-start items-center mt-4">
-                <button type="button" class="btn_vote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ likes.length }}</span></button>
+                <button v-if="post.isLiked" type="button" class="btn_unvote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-down"></i><span class="absolute -top-6 text-primary group-hover:text-red-600">{{ likes.length }}</span></button>
+                <button v-else type="button" class="btn_vote group" @click="sendRequestLikePost(post.postId)"><i class="fas fa-caret-square-up"></i><span class="absolute -top-6 group-hover:text-primary">{{ likes.length }}</span></button>
             </div>
             <div class="w-full">
                 <div id="comments" :data-id="comment.id" class="flex jusitfy-start items-start my-2 border p-2 rounded-2xl w-full h-auto relative" v-for="comment in comments" :key="comment.id">
@@ -110,6 +111,14 @@ export default {
                 this.user = post.User;
                 this.likes = post.Likes;
                 this.post = post;
+                let isLiked = false;
+                for (const like of this.likes) {
+                    if(like.user_id == this.userId) {
+                        isLiked = true;
+                    }
+                }
+                post.isLiked = isLiked;
+                console.log(isLiked);
             })
         },
         sendRequestLikePost(postId){
