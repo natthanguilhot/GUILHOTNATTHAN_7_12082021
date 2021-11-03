@@ -31,7 +31,7 @@
         <div class="rounded-full h-4 w-4 bg-primary absolute -top-1 -left-1 animate-ping"></div>
         <p class="text-primary">Voulez-vous vraiment supprimer votre compte ?</p>
         <div class="flex justify-around items-center w-full mt-4">
-          <button @click="deleteAccount" class="bg-primary text-white px-4 py-2 rounded-2xl">Oui</button>
+          <button @click="deleteAccount" class="bg-red-700 text-white px-4 py-2 rounded-2xl">Oui</button>
           <button @click="this.modaleDeleteAccount = false" class="bg-green-600 text-white px-4 py-2 rounded-2xl">Non</button>
         </div>
       </div>

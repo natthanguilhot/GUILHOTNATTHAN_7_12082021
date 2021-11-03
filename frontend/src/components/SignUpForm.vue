@@ -7,29 +7,29 @@
         <div class="flex flex-col justify-center items-center m-2 w-full">
           <label for="email">Email</label>
           <input v-model="user.email" id="email" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="email" placeholder="exemple@exemple.fr" minlength="6"/>
-          <p v-if="regexEmail" class="text-primary m-1">{{ regexEmail }}</p>
+          <p v-if="regexEmail" class="text-red-600 m-1">{{ regexEmail }}</p>
         </div>
         <div class="flex flex-col justify-center items-center m-2 w-full">
           <label for="password">Mot de passe</label>
           <input v-model="user.password" id="password" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="password" placeholder="Min. 8 caractères" minlength="8" maxlength="20"/>
-          <p v-if="password" class="text-primary m-1">{{ password }}</p>
+          <p v-if="password" class="text-red-600 m-1">{{ password }}</p>
         </div>
         <div class="flex flex-col justify-center items-center m-2 w-full">
           <label for="lastname">Nom</label>
           <input v-model="user.lastname" id="lastname" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="text" placeholder="Min. 3 caractères" minlength="3" maxlength="15"/>
-          <p v-if="lastname" class="text-primary m-1">{{ lastname }}</p>
+          <p v-if="lastname" class="text-red-600 m-1">{{ lastname }}</p>
         </div>
         <div class="flex flex-col justify-center items-center m-2 w-full">
           <label for="name">Prénom</label>
           <input v-model="user.name" id="name" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="text" placeholder="Min. 3 caractères" minlength="3" maxlength="15"/>
-          <p v-if="name" class="text-primary m-1">{{ name }}</p>
+          <p v-if="name" class="text-red-600 m-1">{{ name }}</p>
         </div>
         <div class="flex flex-col justify-center items-center m-2 w-full">
           <label for="job">Job (optionnel)</label>
           <input v-model="user.job" id="job" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" type="text" placeholder="Developpeur" minlength="3" maxlength="15"/>
         </div>
         <button @click.prevent="signUp" type="submit" class="text-center py-2 px-5 bg-secondary rounded m-2  focus:ring-4 focus:ring-prmary ring-offset-2">Créer un compte</button>
-        <p v-if="error" class="text-primary error_message">{{ error }}</p>
+        <p v-if="error" class="text-red-600 error_message">{{ error }}</p>
         <p v-if="response" class="text-green-600">{{ response }}</p>
         <p class="my-4">Vous avez déjà un compte ? <span @click="displayForm" class="text-primary hover:underline hover:text-black cursor-pointer">Se connecter</span></p>
       </form>
@@ -60,33 +60,42 @@ export default {
   methods:{
     signUp(){
       this.$emit('displayLoading');
+      this.regexEmail = '';
+      this.name = '';
+      this.lastname = '';
+      this.password = '';
+
       const REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if(!REGEX_EMAIL.test(this.user.email)){
+      let hasError = false;
+
+      if(!REGEX_EMAIL.test(this.user.email)) {
         this.regexEmail = 'Email non conforme !';
-        this.$emit('displayLoading');
-        setTimeout(() => {
-          this.regexEmail = '';
-        }, 3000);
-      } else if(this.user.password.length < 8){
-        this.password = 'Mot de passe non conforme !';
-        this.$emit('displayLoading');
-        setTimeout(() => {
-          this.password = '';
-        }, 3000);
+        hasError = true;
       }
-      else if(this.user.lastname.length < 3) {
+      if(this.user.password.length < 8) {
+        this.password = 'Mot de passe non conforme !';
+        hasError = true;
+      }
+      if(this.user.lastname.length < 3) {
         this.lastname = 'Nom non conforme !';
-        this.$emit('displayLoading');
-        setTimeout(() => {
-          this.lastname = '';
-        }, 3000);
-      } else if(this.user.name.length < 3) {
+        hasError = true;
+      }
+      if(this.user.name.length < 3) {
         this.name = 'Prénom non conforme !';
+        hasError = true;
+      }
+
+      if(hasError) {
         this.$emit('displayLoading');
-        setTimeout(() => {
-          this.name = '';
-        }, 3000);
-      } else { // Si toutes les vérifications son ok alors on envoie au serveur !
+
+        // setTimeout(() => {
+          // this.regexEmail = '';
+          // this.name = '';
+          // this.lastname = '';
+          // this.password = '';
+        // }, 3000);
+      }
+      else { // Si toutes les vérifications son ok alors on envoie au serveur !
         fetch('http://localhost:3000/api/auth/signup',
         {
           method: 'POST',
@@ -98,12 +107,15 @@ export default {
         })
         .then(response => response.json())
         .then(response => {
-          console.log(response)
+          console.log(response);
           this.response = response.message;
           this.error = response.error;
           this.$emit('displayLoading');
           setTimeout(() => {
-          this.response = ""; this.error = ""; this.user.email = ""; this.user.password = ""; this.user.lastname = ""; this.user.name = ""; this.user.job = "";
+            if(this.error == undefined){
+              this.$emit('displayForm');
+            }
+            this.response = ""; this.error = ""; this.user.email = ""; this.user.password = ""; this.user.lastname = ""; this.user.name = ""; this.user.job = "";
           }, 2000);
         })
         .catch(error => error.json())

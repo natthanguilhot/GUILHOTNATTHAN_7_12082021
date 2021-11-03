@@ -2,8 +2,7 @@
     <form id="formAddPost" class="flex flex-col justify-between items-center bg-white h-auto w-11/12 my-6 lg:mx-8 p-3 rounded-2xl max-w-3xl border">
         <div class="flex justify-between sm:justify-start items-start w-full p-1">
             <div class="bg-gray-900 h-16 w-16 rounded-2xl flex justify-center items-center">
-                <img v-if="user.pp" :src="user.pp" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl object-cover">
-                <img v-else src="http://localhost:3000/images/users/default_PP.jpg" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
+                <img :src="user.pp" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl object-cover">
             </div>
             <div class="h-full w-9/12 sm:w-full p-1">
                 <label for="content">Partagez avec vos collègues :</label>
