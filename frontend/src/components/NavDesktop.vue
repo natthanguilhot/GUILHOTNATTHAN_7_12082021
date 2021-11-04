@@ -1,7 +1,7 @@
 <template>
     <div class="hidden lg:block min-w-[210px] w-3/12 max-w-sm h-auto rounded-2xl mt-6">
         <div class="bg-white rounded-2xl border p-4 flex justify-start items-center">
-            <img :src="user.pp" alt="Votre photo de profil" class="h-16 w-16 rounded-2xl object-cover">
+            <img :src="$store.state.user.profile_picture" alt="Votre photo de profil" class="h-16 w-16 rounded-2xl object-cover">
             <h1 class="ml-2">{{user.name}} {{ user.lastname }}</h1>
         </div>
         <nav class="hidden lg:block min-w-[210px] w-full max-w-sm h-auto bg-white rounded-2xl mt-6 border">
