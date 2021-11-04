@@ -111,6 +111,7 @@ export default {
                 this.user = post.User;
                 this.likes = post.Likes;
                 this.post = post;
+                console.log(this.post);
                 let isLiked = false;
                 for (const like of this.likes) {
                     if(like.user_id == this.userId) {
@@ -118,7 +119,6 @@ export default {
                     }
                 }
                 post.isLiked = isLiked;
-                console.log(isLiked);
             })
         },
         sendRequestLikePost(postId){
@@ -170,6 +170,12 @@ export default {
                 this.addCommentBody.content = null;
                 this.APIRequest();
             })
+        },
+        returnLine(content){
+            console.log(contenu);
+            let contenu = content;
+            let returnLine = contenu.split('\n').join(' <br/> ');
+            return returnLine;
         },
     },
     mounted(){
