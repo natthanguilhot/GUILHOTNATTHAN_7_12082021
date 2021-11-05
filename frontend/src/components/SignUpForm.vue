@@ -2,7 +2,7 @@
   <div class="flex flex-col justify-center items-center relative">
     <div class="max-w-screen-md m-auto absolute inset-0">
       <form id="signup" class="w-10/12 border rounded-2xl m-auto flex flex-col justify-center items-center my-8 shadow-lg min-h-[665px] bg-white">
-        <img src="../assets/icon-left-font-monochrome-black.png" alt="Groupomania" class="p-4 m-4"/>
+        <img src="../assets/icon.png" alt="Groupomania" class="p-4 m-4 w-40 h-40"/>
         <p class="text-lg text-center m-4">Retrouvez tout vos collègues en vous inscrivant !</p>
         <div class="flex flex-col justify-center items-center m-2 w-full">
           <label for="email">Email</label>
@@ -25,7 +25,7 @@
           <p v-if="name" class="text-red-600 m-1">{{ name }}</p>
         </div>
         <div class="flex flex-col justify-center items-center m-2 w-full">
-          <label for="job">Job (optionnel)</label>
+          <label for="job">Poste occupé (optionnel)</label>
           <input v-model="user.job" id="job" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" type="text" placeholder="Developpeur" minlength="3" maxlength="15"/>
         </div>
         <button @click.prevent="signUp" type="submit" class="text-center py-2 px-5 bg-secondary rounded m-2  focus:ring-4 focus:ring-prmary ring-offset-2">Créer un compte</button>

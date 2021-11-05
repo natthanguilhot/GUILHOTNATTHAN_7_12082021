@@ -17,7 +17,7 @@
         <input v-model="user.name" id="name" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" required type="text" placeholder="Min. 3 caractères" minlength="3" maxlength="15"/>
       </div>
       <div class="flex flex-col justify-center items-center m-2 w-full">
-        <label for="job">Job (optionnel)</label>
+        <label for="job">Poste occupé (optionnel)</label>
         <input v-model="user.job" id="job" class="border border-gray shadow-sm w-10/12 max-w-xs rounded pl-1 focus:ring-2 ring-offset-2 focus:ring-secondary" type="text" placeholder="Developpeur" minlength="3" maxlength="15"/>
       </div>
       <button @click.prevent="updateUserInformations" type="submit" class="text-center py-2 px-5 bg-secondary rounded m-2  focus:ring-4 focus:ring-prmary ring-offset-2">Mettre à jour les informations</button>

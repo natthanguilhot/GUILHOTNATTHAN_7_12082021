@@ -2,7 +2,7 @@
     <div class="flex flex-col justify-center items-center relative">
         <div class="max-w-screen-md m-auto absolute inset-0">
             <form id="login" class="w-10/12 border rounded-2xl m-auto flex flex-col justify-center items-center my-8 shadow-lg min-h-[665px] bg-white">
-                <img src="../assets/icon-left-font-monochrome-black.png" alt="Groupomania" class="p-4 m-4"/>
+                <img src="../assets/icon.png" alt="Groupomania" class="p-4 m-4 w-40 h-40"/>
                 <p class="text-lg text-center m-4">Retrouvez tout vos collègues en vous connectant !</p>
                 <div class="flex flex-col justify-center items-center m-2 w-full">
                     <label for="email">Email</label>
