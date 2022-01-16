@@ -92,7 +92,7 @@ export default {
       formdata.append("lastname", this.user.lastname);
       formdata.append("name", this.user.name);
       formdata.append("job", this.user.job);
-      console.log('Requête de maj données envoyée !')
+      // console.log('Requête de maj données envoyée !')
       fetch('http://localhost:3000/api/auth/user/' + `${this.bodyUserId.userId}`,{
         method: 'PUT',
         headers: {
@@ -116,7 +116,7 @@ export default {
       })
     },
     deleteAccount(){
-      console.log('delete acc');
+      // console.log('delete acc');
       this.bodyUserId.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
       fetch('http://localhost:3000/api/auth/user/' + `${this.bodyUserId.userId}`,{
         method: 'DELETE',
@@ -132,7 +132,7 @@ export default {
         localStorage.removeItem('authgroupomania');
         let splitURL = location.href.split('#/');
         window.location.href = splitURL[0];
-        console.log(response);
+        // console.log(response);
       })
     },
   },

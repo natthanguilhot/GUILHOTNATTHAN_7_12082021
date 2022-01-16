@@ -62,12 +62,12 @@ export default {
       .then(response => {
         response.Posts.reverse();
         this.userInformations = response;
-        console.log(this.userInformations);
+        // console.log(this.userInformations);
       });
     },
     returnLine(content){
       let contenu = content;
-      console.log(contenu);
+      // console.log(contenu);
       let returnLine = contenu.split('\n').join(' <br/> ');
       return returnLine;
     },

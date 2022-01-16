@@ -80,7 +80,7 @@ export default {
             })
             .then(response => response.json())
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 this.APIRequest();
             })
         },
@@ -111,7 +111,7 @@ export default {
                 this.user = post.User;
                 this.likes = post.Likes;
                 this.post = post;
-                console.log(this.post);
+                // console.log(this.post);
                 let isLiked = false;
                 for (const like of this.likes) {
                     if(like.user_id == this.userId) {
@@ -152,7 +152,7 @@ export default {
         addComment(){
             this.addCommentBody.userId = this.userId;
             this.addCommentBody.postId = this.post.postId;
-            console.log(this.addCommentBody);
+            // console.log(this.addCommentBody);
             let href = window.location.href;
             let hrefsplit = href.split('/');
             const id = hrefsplit[hrefsplit.length - 1];
@@ -172,9 +172,8 @@ export default {
             })
         },
         returnLine(content){
-            console.log(contenu);
-            let contenu = content;
-            let returnLine = contenu.split('\n').join(' <br/> ');
+            // console.log(content);
+            let returnLine = content.split('\n').join(' <br/> ');
             return returnLine;
         },
     },

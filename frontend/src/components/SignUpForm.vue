@@ -68,7 +68,7 @@ export default {
       const REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       let hasError = false;
 
-      if(!REGEX_EMAIL.test(this.user.email)) {
+      if(!REGEX_EMAIL.test(this.user.email)) { // Vérifications des inputs utilisateur
         this.regexEmail = 'Email non conforme !';
         hasError = true;
       }
@@ -88,12 +88,6 @@ export default {
       if(hasError) {
         this.$emit('displayLoading');
 
-        // setTimeout(() => {
-          // this.regexEmail = '';
-          // this.name = '';
-          // this.lastname = '';
-          // this.password = '';
-        // }, 3000);
       }
       else { // Si toutes les vérifications son ok alors on envoie au serveur !
         fetch('http://localhost:3000/api/auth/signup',
@@ -107,7 +101,7 @@ export default {
         })
         .then(response => response.json())
         .then(response => {
-          console.log(response);
+          // console.log(response);
           this.response = response.message;
           this.error = response.error;
           this.$emit('displayLoading');

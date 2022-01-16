@@ -55,7 +55,7 @@ export default {
             .then(response => response.json())
             .then(posts => {
                 this.listPosts = Object.values(posts);
-                console.log(this.listPosts);
+                // console.log(this.listPosts);
                 for (const post of this.listPosts) { // On split les formatt actuel pour les regrouper au format voulu
                     let splitDateTime = post.createdAt.split('T');
                     let splitDate = splitDateTime[0].split('-');
@@ -123,7 +123,7 @@ export default {
             .then(response => response.json())
             .then(response => {
                 this.APIRequest();
-                console.log(response);
+                // console.log(response);
             });
         }
     },
@@ -140,19 +140,19 @@ export default {
     animation: spawn_animation 2s ease 0s normal both;
 }
 @keyframes spawn_animation {
-    0%{
+    0% {
         transform: translateY(50px);
         opacity:0;
     }
-    10%{
+    10% {
         transform: translateY(0px);
         opacity:1;
     }
-    90%{
+    90% {
         transform: translateY(0px);
         opacity:1;
     }
-    100%{
+    100% {
         transform: translateY(50px);
         opacity:0;
     }
@@ -161,6 +161,6 @@ export default {
     @apply h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-primary hover:text-white hover:bg-primary relative;
 }
 .btn_unvote {
-    @apply h-10 w-10 flex justify-center items-center m-1 p-1 border border-primary rounded-2xl text-white bg-primary hover:text-primary hover:bg-white relative;
+    @apply h-10 w-10 flex justify-center items-center m-1 p-1 border border-red-600 rounded-2xl text-white bg-red-600 hover:text-primary hover:bg-white relative;
 }
 </style>
