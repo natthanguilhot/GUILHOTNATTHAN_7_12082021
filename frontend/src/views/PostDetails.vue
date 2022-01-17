@@ -69,7 +69,7 @@ export default {
         deleteMyComment(commentId){
             this.deleteCommentBody.userId = this.userId;
             this.deleteCommentBody.commentId = commentId;
-            fetch('http://localhost:3000/api/comments/post/'+ `${commentId}`,{
+            fetch('https://groupomania-17379.nodechef.com:2567/api/comments/post/'+ `${commentId}`,{
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json', 
@@ -90,7 +90,7 @@ export default {
             const id = hrefsplit[hrefsplit.length - 1];
             this.bodyRequestGetPost.postId = id;
 
-            fetch('http://localhost:3000/api/posts/'+ `${id}`,{
+            fetch('https://groupomania-17379.nodechef.com:2567/api/posts/'+ `${id}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 
@@ -127,7 +127,7 @@ export default {
                 postId : postId,
                 commentId : null,
             };
-            fetch('http://localhost:3000/api/likes/post/' + `${JSON.stringify(postId)}`,{
+            fetch('https://groupomania-17379.nodechef.com:2567/api/likes/post/' + `${JSON.stringify(postId)}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 
@@ -156,7 +156,7 @@ export default {
             let href = window.location.href;
             let hrefsplit = href.split('/');
             const id = hrefsplit[hrefsplit.length - 1];
-            fetch('http://localhost:3000/api/comments/post/'+ `${id}`,{
+            fetch('https://groupomania-17379.nodechef.com:2567/api/comments/post/'+ `${id}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 

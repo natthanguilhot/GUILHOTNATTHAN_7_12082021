@@ -57,7 +57,7 @@ export default {
                 formdata.append("userId", this.post.userId);
                 formdata.append("content", this.post.content);
                 formdata.append("files", inputFile.files[0]);
-                fetch('http://localhost:3000/api/posts',{
+                fetch('https://groupomania-17379.nodechef.com:2567/api/posts',{
                     method: 'POST',
                     headers: {
                         'Authorization' : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
@@ -94,7 +94,7 @@ export default {
             }, 100);
         },
         getUserInformations(){
-            fetch('http://localhost:3000/api/auth/user/' + `${this.bodyUserId.userId}`,{
+            fetch('https://groupomania-17379.nodechef.com:2567/api/auth/user/' + `${this.bodyUserId.userId}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 

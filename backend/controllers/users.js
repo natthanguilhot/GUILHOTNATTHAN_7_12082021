@@ -26,7 +26,7 @@ exports.signup = (req,res,next) => {
                             lastname:req.body.lastname, 
                             name:req.body.name,
                             job:req.body.job,
-                            profile_picture: 'http://localhost:3000/images/users/default_PP.jpg'
+                            profile_picture: 'https://groupomania-17379.nodechef.com:2567/images/users/default_PP.jpg'
                         });
                         res.status(200).json({message : 'Utilisateur créé !'});
                     });

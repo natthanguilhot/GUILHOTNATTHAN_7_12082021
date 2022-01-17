@@ -49,7 +49,7 @@ export default {
     getUserProfil(){
       this.body.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
       this.body.getUserId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
-      fetch('http://localhost:3000/api/auth/userprofil/' + `${this.body.userId}`,{
+      fetch('https://groupomania-17379.nodechef.com:2567/api/auth/userprofil/' + `${this.body.userId}`,{
           method: 'POST',
           headers: {
               'Accept': 'application/json', 

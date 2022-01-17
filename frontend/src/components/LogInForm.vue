@@ -35,7 +35,7 @@ export default {
   methods:{
     LogIn(){
         this.$emit('displayLoading');
-        fetch('http://localhost:3000/api/auth/login',
+        fetch('https://groupomania-17379.nodechef.com:2567/api/auth/login',
         {
             method: 'POST',
             headers: { 

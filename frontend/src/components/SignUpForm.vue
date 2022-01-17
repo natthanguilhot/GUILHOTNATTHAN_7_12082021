@@ -90,7 +90,7 @@ export default {
 
       }
       else { // Si toutes les vérifications son ok alors on envoie au serveur !
-        fetch('http://localhost:3000/api/auth/signup',
+        fetch('https://groupomania-17379.nodechef.com:2567/api/auth/signup',
         {
           method: 'POST',
           headers: { 
@@ -105,12 +105,12 @@ export default {
           this.response = response.message;
           this.error = response.error;
           this.$emit('displayLoading');
-          setTimeout(() => {
-            if(this.error == undefined){
-              this.$emit('displayForm');
-            }
-            this.response = ""; this.error = ""; this.user.email = ""; this.user.password = ""; this.user.lastname = ""; this.user.name = ""; this.user.job = "";
-          }, 2000);
+          // setTimeout(() => {
+          //   if(this.error == undefined){
+          //     this.$emit('displayForm');
+          //   }
+          //   this.response = ""; this.error = ""; this.user.email = ""; this.user.password = ""; this.user.lastname = ""; this.user.name = ""; this.user.job = "";
+          // }, 2000);
         })
         .catch(error => error.json())
       }

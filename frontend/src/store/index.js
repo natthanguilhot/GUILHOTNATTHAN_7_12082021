@@ -37,7 +37,7 @@ export default createStore({
       let body = {
         userId : context.state.user.id,
       }
-      fetch('http://localhost:3000/api/auth/user/'+ `${userId}`,{
+      fetch('https://groupomania-17379.nodechef.com:2567/api/auth/user/'+ `${userId}`,{
         method: 'POST',
         headers: {
           'Accept': 'application/json', 
