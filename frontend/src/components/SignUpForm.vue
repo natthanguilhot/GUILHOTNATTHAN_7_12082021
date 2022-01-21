@@ -90,7 +90,7 @@ export default {
 
       }
       else { // Si toutes les vérifications son ok alors on envoie au serveur !
-        fetch('https://groupomania-17379.nodechef.com:2567/api/auth/signup',
+        fetch('https://groupomania-17379.nodechef.com/api/auth/signup',
         {
           method: 'POST',
           headers: { 

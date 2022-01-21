@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         APIRequest(){
-            fetch('https://groupomania-17379.nodechef.com:2567/api/posts',{
+            fetch('https://groupomania-17379.nodechef.com/api/posts',{
                 method: 'GET',
                 headers: {
                     authorization : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token
@@ -88,7 +88,7 @@ export default {
                 postId : postId,
                 commentId : null,
             };
-            fetch('https://groupomania-17379.nodechef.com:2567/api/likes/post/' + `${JSON.stringify(postId)}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/likes/post/' + `${JSON.stringify(postId)}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 
@@ -111,7 +111,7 @@ export default {
                 userId : this.userId,
                 postId : postId,
             };
-            fetch('https://groupomania-17379.nodechef.com:2567/api/posts/' + `${JSON.stringify(postId)}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/posts/' + `${JSON.stringify(postId)}`,{
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json', 

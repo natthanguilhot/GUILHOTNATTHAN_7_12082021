@@ -64,7 +64,7 @@ export default {
   methods: {
     requestUserInformations(){
       this.bodyUserId.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
-      fetch('https://groupomania-17379.nodechef.com:2567/api/auth/user/'+ `${this.bodyUserId.userId}`,{
+      fetch('https://groupomania-17379.nodechef.com/api/auth/user/'+ `${this.bodyUserId.userId}`,{
         method: 'POST',
         headers: {
           'Accept': 'application/json', 
@@ -93,7 +93,7 @@ export default {
       formdata.append("name", this.user.name);
       formdata.append("job", this.user.job);
       // console.log('Requête de maj données envoyée !')
-      fetch('https://groupomania-17379.nodechef.com:2567/api/auth/user/' + `${this.bodyUserId.userId}`,{
+      fetch('https://groupomania-17379.nodechef.com/api/auth/user/' + `${this.bodyUserId.userId}`,{
         method: 'PUT',
         headers: {
           'Authorization' : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
@@ -118,7 +118,7 @@ export default {
     deleteAccount(){
       // console.log('delete acc');
       this.bodyUserId.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
-      fetch('https://groupomania-17379.nodechef.com:2567/api/auth/user/' + `${this.bodyUserId.userId}`,{
+      fetch('https://groupomania-17379.nodechef.com/api/auth/user/' + `${this.bodyUserId.userId}`,{
         method: 'DELETE',
         headers: {
           'Accept': 'application/json', 

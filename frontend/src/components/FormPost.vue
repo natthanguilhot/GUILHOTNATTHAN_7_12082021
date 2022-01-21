@@ -11,7 +11,7 @@
         </div>
         <img v-if="file" id="myimage" src="" alt="Prévisualisation de votre fichier" class="rounded-2xl">
         <div class="flex justify-between items-center w-full p-1">
-            <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-2 text-center text-white h-10 w-5/12 max-w-[120px] hover:opacity-75"><i class="fas fa-link pr-4 hidden sm:contents"></i>GIF/JGP/PNG</label>
+            <label for="file" class="cursor-pointer bg-primary rounded-2xl px-1 py-1 text-center text-white h-10 w-5/12 max-w-[120px] hover:opacity-75">GIF/JGP/PNG</label>
             <input @change="onFileSelected" id="file" name="file" type="file" accept="image/png, image/jpeg, image/jpg" class="w-0 h-0"/>
             <button @click.prevent="sendPost" type="submit" class="bg-primary rounded-2xl text-center m-1 text-white h-10 w-4/12">Envoyez !</button>
         </div>
@@ -57,7 +57,7 @@ export default {
                 formdata.append("userId", this.post.userId);
                 formdata.append("content", this.post.content);
                 formdata.append("files", inputFile.files[0]);
-                fetch('https://groupomania-17379.nodechef.com:2567/api/posts',{
+                fetch('https://groupomania-17379.nodechef.com/api/posts',{
                     method: 'POST',
                     headers: {
                         'Authorization' : 'Bearer' + ' ' + JSON.parse(localStorage.getItem('authgroupomania')).token,
@@ -94,7 +94,7 @@ export default {
             }, 100);
         },
         getUserInformations(){
-            fetch('https://groupomania-17379.nodechef.com:2567/api/auth/user/' + `${this.bodyUserId.userId}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/auth/user/' + `${this.bodyUserId.userId}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 

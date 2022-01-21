@@ -1,6 +1,6 @@
 <template>
   <div class="main bg-gray-100">
-    <!-- <Header/> -->
+    <Header/>
     <div class="flex justify-center items-start m-auto lg:w-9/12 relative">
       <NavDesktop />
       <router-view />

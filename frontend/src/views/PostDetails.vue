@@ -2,7 +2,7 @@
     <div class="flex flex-col justify-center items-center w-full max-w-3xl">
         <div class="border rounded-2xl h-auto bg-white w-11/12 m-1 my-6 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
-                <img v-if="user.profile_picture" :src="user.profile_picture" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl">
+                <img v-if="user.profile_picture" :src="user.profile_picture" alt="PP de l'utilisateur" class="bg-gray-900 h-16 w-16 rounded-2xl object-cover">
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ user.name }} {{user.lastname}}</h2>
                     <p>{{ post.createdAt }}</p>
@@ -69,7 +69,7 @@ export default {
         deleteMyComment(commentId){
             this.deleteCommentBody.userId = this.userId;
             this.deleteCommentBody.commentId = commentId;
-            fetch('https://groupomania-17379.nodechef.com:2567/api/comments/post/'+ `${commentId}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/comments/post/'+ `${commentId}`,{
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json', 
@@ -90,7 +90,7 @@ export default {
             const id = hrefsplit[hrefsplit.length - 1];
             this.bodyRequestGetPost.postId = id;
 
-            fetch('https://groupomania-17379.nodechef.com:2567/api/posts/'+ `${id}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/posts/'+ `${id}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 
@@ -127,7 +127,7 @@ export default {
                 postId : postId,
                 commentId : null,
             };
-            fetch('https://groupomania-17379.nodechef.com:2567/api/likes/post/' + `${JSON.stringify(postId)}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/likes/post/' + `${JSON.stringify(postId)}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 
@@ -156,7 +156,7 @@ export default {
             let href = window.location.href;
             let hrefsplit = href.split('/');
             const id = hrefsplit[hrefsplit.length - 1];
-            fetch('https://groupomania-17379.nodechef.com:2567/api/comments/post/'+ `${id}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/comments/post/'+ `${id}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 

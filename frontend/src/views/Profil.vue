@@ -11,7 +11,7 @@
   </div>
         <div v-for="post in userInformations.Posts" :key="post.id" :data-postid="post.id" class="border rounded-2xl h-auto bg-white w-11/12 m-1 lg:my-4 hover:shadow flex flex-col justify-around items-start p-4 max-w-3xl relative">
             <div :data-userid="post.userId" class="flex justify-around items-start mb-6 ">
-                <img v-if="userInformations.profile_picture" :src="userInformations.profile_picture" :alt="'Photo profil de '+ userInformations.name + userInformations.lastname" class="bg-gray-900 h-16 w-16 rounded-2xl">
+                <img v-if="userInformations.profile_picture" :src="userInformations.profile_picture" :alt="'Photo profil de '+ userInformations.name + userInformations.lastname" class="bg-gray-900 h-16 w-16 rounded-2xl object-cover">
                 <div class="flex flex-col justify-around items-start m-2">
                     <h2>{{ userInformations.name }} {{userInformations.lastname}}</h2>
                     <p>{{ formatCreatedAt(post.createdAt) }}</p>
@@ -49,7 +49,7 @@ export default {
     getUserProfil(){
       this.body.userId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
       this.body.getUserId = JSON.parse(localStorage.getItem('authgroupomania')).userId;
-      fetch('https://groupomania-17379.nodechef.com:2567/api/auth/userprofil/' + `${this.body.userId}`,{
+      fetch('https://groupomania-17379.nodechef.com/api/auth/userprofil/' + `${this.body.userId}`,{
           method: 'POST',
           headers: {
               'Accept': 'application/json', 

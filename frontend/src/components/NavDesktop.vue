@@ -56,7 +56,7 @@ export default {
             localStorage.clear('authgroupomania');
         },
         getUserInformations(){
-            fetch('https://groupomania-17379.nodechef.com:2567/api/auth/user/' + `${this.bodyUserId.userId}`,{
+            fetch('https://groupomania-17379.nodechef.com/api/auth/user/' + `${this.bodyUserId.userId}`,{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json', 
